@@ -3,6 +3,7 @@ import PreMatchCard from '@/components/PreMatchCard.vue';
 import AutonomousCard from '@/components/AutonomousCard.vue'
 import TeleopCard from '@/components/TeleopCard.vue'
 import EndGameCard from '@/components/EndGameCard.vue';
+import PostMatchCard from '@/components/PostMatchCard.vue';
 
 const form = {
   scouter: '',
@@ -28,7 +29,14 @@ const form = {
   teleopFoul: 0,
 
   endPosition: '',
-  harmony: ''
+  harmony: '',
+
+  offenseSkill: '',
+  defenseSkill: '',
+  died: false,
+  tippedOver: false,
+  card: '',
+  comments: ''
 }
 
 function onPreMatchChange(
@@ -89,6 +97,21 @@ function onEndGameChange(
   form.harmony = harmony
 }
 
+function onPostMatchChange(
+  offenseSkill: string, 
+  defenseSkill: string, 
+  died: boolean, 
+  tippedOver: boolean, 
+  card: string,
+  comments: string
+) {
+  form.offenseSkill = offenseSkill
+  form.defenseSkill = defenseSkill
+  form.died = died
+  form.tippedOver = tippedOver
+  form.card = card,
+  form.comments = comments
+}
 </script>
 
 <template>
@@ -106,7 +129,7 @@ function onEndGameChange(
       <EndGameCard @change="onEndGameChange"></EndGameCard>
     </v-col>
     <v-col>
-      <PreMatchCard></PreMatchCard>
+      <PostMatchCard @change="onPostMatchChange"></PostMatchCard>
     </v-col>
   </v-row>
 </template>
