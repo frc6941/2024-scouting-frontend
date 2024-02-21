@@ -38,7 +38,7 @@ const emits = defineEmits<{
   ): void
 }>()
 
-function onClick() {
+function onUpdate() {
   emits(
     'change', 
     scouter.value,
@@ -63,10 +63,10 @@ function onClick() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
-          <v-text-field label="Scouter" @click="onClick" v-model="scouter"></v-text-field>
-          <v-text-field label="比赛编号" @click="onClick" v-model="matchNumber"></v-text-field>
-          <v-text-field label="队号" @click="onClick" v-model="teamNumber"></v-text-field>
-          <v-select label="联盟 & Robot" @click="onClick" :items="robots" v-model="allianceRobot" hide-details></v-select>
+          <v-text-field label="Scouter" @update:model-value="onUpdate" v-model="scouter"></v-text-field>
+          <v-text-field label="比赛编号" @update:model-value="onUpdate" v-model="matchNumber"></v-text-field>
+          <v-text-field label="队号" @update:model-value="onUpdate" v-model="teamNumber"></v-text-field>
+          <v-select label="联盟 & Robot" @update:model-value="onUpdate" :items="robots" v-model="allianceRobot" hide-details></v-select>
         </v-container>
       </v-sheet>
     </v-row>

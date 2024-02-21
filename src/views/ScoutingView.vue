@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PreMatchCard from '@/components/PreMatchCard.vue';
 import AutonomousCard from '@/components/AutonomousCard.vue'
+import TeleopCard from '@/components/TeleopCard.vue'
 
 const form = {
   scouter: '',
@@ -9,11 +10,21 @@ const form = {
   allianceRobot: '',
   hpAtAmp: false,
   robotAbsent: false,
+  
+  mobile: false,
   autoAmpScores: 0,
   autoAmpMissed: 0,
   autoSpeakerScore: 0,
   autoSpeakerMissed: 0,
-  autoFoul: 0
+  autoFoul: 0,
+
+  coopertition: false,
+  teleopAmpScores: 0,
+  teleopAmpMissed: 0,
+  teleopSpeakerScore: 0,
+  teleopSpeakerMissed: 0,
+  teleopTrapScored: 0,
+  teleopFoul: 0,
 }
 
 function onPreMatchChange(
@@ -33,17 +44,37 @@ function onPreMatchChange(
 }
 
 function onAutonomousChange(
+  mobile: boolean,
   ampScores: number, 
   ampMissed: number, 
   speakerScore: number, 
   speakerMissed: number, 
   foul: number
 ) {
+  form.mobile = mobile
   form.autoAmpScores = ampScores
   form.autoAmpMissed = ampMissed
   form.autoSpeakerScore = speakerScore
   form.autoSpeakerMissed = speakerMissed
   form.autoFoul = foul
+}
+
+function onTeleopChange(
+  coopertition: boolean,
+  ampScores: number, 
+  ampMissed: number, 
+  speakerScore: number, 
+  speakerMissed: number, 
+  trapScore: number,
+  foul: number
+) {
+  form.coopertition = coopertition
+  form.teleopAmpScores = ampScores
+  form.teleopAmpMissed = ampMissed
+  form.teleopSpeakerScore = speakerScore
+  form.teleopSpeakerMissed = speakerMissed
+  form.teleopTrapScored = trapScore
+  form.teleopFoul = foul
 }
 
 </script>
@@ -57,7 +88,7 @@ function onAutonomousChange(
       <AutonomousCard @change="onAutonomousChange"></AutonomousCard>
     </v-col>
     <v-col>
-      <PreMatchCard></PreMatchCard>
+      <TeleopCard @change="onTeleopChange"></TeleopCard>
     </v-col>
     <v-col>
       <PreMatchCard></PreMatchCard>
