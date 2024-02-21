@@ -11,36 +11,36 @@ const savedForm = getCookie('form')
 
 interface Form {
   scouter: string,
-    matchNumber: string,
-    teamNumber: string,
-    allianceRobot: string,
-    hpAtAmp: boolean,
-    robotAbsent: boolean,
+  matchNumber: string,
+  teamNumber: string,
+  allianceRobot: string,
+  hpAtAmp: boolean,
+  robotAbsent: boolean,
   
-    mobile: boolean,
-    autoAmpScores: number,
-    autoAmpMissed: number,
-    autoSpeakerScore: number,
-    autoSpeakerMissed: number,
-    autoFoul: number,
+  mobile: boolean,
+  autoAmpScores: number,
+  autoAmpMissed: number,
+  autoSpeakerScore: number,
+  autoSpeakerMissed: number,
+  autoFoul: number,
 
-    coopertition: boolean,
-    teleopAmpScores: number,
-    teleopAmpMissed: number,
-    teleopSpeakerScore: number,
-    teleopSpeakerMissed: number,
-    teleopTrapScored: number,
-    teleopFoul: number,
+  coopertition: boolean,
+  teleopAmpScores: number,
+  teleopAmpMissed: number,
+  teleopSpeakerScore: number,
+  teleopSpeakerMissed: number,
+  teleopTrapScored: number,
+  teleopFoul: number,
 
-    endPosition: string,
-    harmony: string,
+  endPosition: string,
+  harmony: string,
 
-    offenseSkill: string,
-    defenseSkill: string,
-    died: boolean,
-    tippedOver: boolean,
-    card: string,
-    comments: string
+  offenseSkill: string,
+  defenseSkill: string,
+  died: boolean,
+  tippedOver: boolean,
+  card: string,
+  comments: string
 }
 
 let form: Form
@@ -84,7 +84,45 @@ if (savedForm == undefined) {
 }
 
 function onChange() {
-  onSave()
+  setCookie('form', JSON.stringify(form))
+}
+
+function onReset() {
+  removeCookie('form')
+  form = {
+    scouter: '',
+    matchNumber: '',
+    teamNumber: '',
+    allianceRobot: '',
+    hpAtAmp: false,
+    robotAbsent: false,
+  
+    mobile: false,
+    autoAmpScores: 0,
+    autoAmpMissed: 0,
+    autoSpeakerScore: 0,
+    autoSpeakerMissed: 0,
+    autoFoul: 0,
+
+    coopertition: false,
+    teleopAmpScores: 0,
+    teleopAmpMissed: 0,
+    teleopSpeakerScore: 0,
+    teleopSpeakerMissed: 0,
+    teleopTrapScored: 0,
+    teleopFoul: 0,
+
+    endPosition: '',
+    harmony: '',
+
+    offenseSkill: '',
+    defenseSkill: '',
+    died: false,
+    tippedOver: false,
+    card: '',
+    comments: ''
+  }
+  location.reload()
 }
 
 function onPreMatchChange(
@@ -166,10 +204,6 @@ function onPostMatchChange(
   onChange()
 }
 
-function onSave() {
-  setCookie('form', JSON.stringify(form))
-}
-
 function onSubmit() {
   removeCookie('form')
 }
@@ -228,6 +262,6 @@ function onSubmit() {
   </v-row>
   <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1 mb-4">
     <v-btn size="x-large" @click="onSubmit">提交</v-btn>
-    <v-btn size="x-large" class="ml-5" @click="onSave">保存</v-btn>
+    <v-btn size="x-large" class="ml-5" @click="onReset">重置</v-btn>
   </v-row>
 </template>
