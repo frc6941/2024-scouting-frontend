@@ -83,6 +83,10 @@ if (savedForm == undefined) {
   form = JSON.parse(savedForm)
 }
 
+function onChange() {
+  onSave()
+}
+
 function onPreMatchChange(
   scouter: string,
   matchNumber: string,
@@ -97,6 +101,7 @@ function onPreMatchChange(
   form.allianceRobot = allianceRobot
   form.hpAtAmp = hpAtAmp
   form.robotAbsent = robotAbsent
+  onChange()
 }
 
 function onAutonomousChange(
@@ -113,6 +118,7 @@ function onAutonomousChange(
   form.autoSpeakerScore = speakerScore
   form.autoSpeakerMissed = speakerMissed
   form.autoFoul = foul
+  onChange()
 }
 
 function onTeleopChange(
@@ -131,6 +137,7 @@ function onTeleopChange(
   form.teleopSpeakerMissed = speakerMissed
   form.teleopTrapScored = trapScore
   form.teleopFoul = foul
+  onChange()
 }
 
 function onEndGameChange(
@@ -139,6 +146,7 @@ function onEndGameChange(
 ) {
   form.endPosition = endPosition
   form.harmony = harmony
+  onChange()
 }
 
 function onPostMatchChange(
@@ -155,6 +163,7 @@ function onPostMatchChange(
   form.tippedOver = tippedOver
   form.card = card,
   form.comments = comments
+  onChange()
 }
 
 function onSave() {

@@ -89,7 +89,7 @@ function onChange() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container class="pt-0 pb-0">
-          <v-checkbox label="可移动" @update:focused="onChange" v-model="mobileRef" hide-details></v-checkbox>
+          <v-checkbox label="可移动" @change="onChange" v-model="mobileRef" hide-details></v-checkbox>
         </v-container>
       </v-sheet>
     </v-row>

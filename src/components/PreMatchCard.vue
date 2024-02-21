@@ -82,8 +82,8 @@ function onUpdate() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container class="pt-0 pb-0">
-          <v-checkbox label="HP 是否在 Amp" @update:focused="onUpdate" v-model="hpAtAmpRef" hide-details></v-checkbox>
-          <v-checkbox label="机器不在现场" @update:focused="onUpdate" v-model="robotAbsentRef" hide-details></v-checkbox>
+          <v-checkbox label="HP 是否在 Amp" @change="onUpdate" v-model="hpAtAmpRef" hide-details></v-checkbox>
+          <v-checkbox label="机器不在现场" @change="onUpdate" v-model="robotAbsentRef" hide-details></v-checkbox>
         </v-container>
       </v-sheet>
     </v-row>

@@ -74,6 +74,7 @@ function onTrapScoreChange(score: number) {
 }
 
 function onChange() {
+  console.log(coopertitionRef.value)
   emits(
     'change', 
     coopertitionRef.value,
@@ -99,7 +100,7 @@ function onChange() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container class="pt-0 pb-0">
-          <v-checkbox label="Coopertition" @update:focused="onChange" v-model="coopertitionRef" hide-details></v-checkbox>
+          <v-checkbox label="Coopertition" @change="onChange" v-model="coopertitionRef" hide-details></v-checkbox>
         </v-container>
       </v-sheet>
     </v-row>

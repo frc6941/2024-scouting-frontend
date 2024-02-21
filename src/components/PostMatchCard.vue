@@ -84,8 +84,8 @@ function onUpdate() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container class="pt-0 pb-0">
-          <v-checkbox label="失去移动能力" @update:focused="onUpdate" v-model="diedRef" hide-details></v-checkbox>
-          <v-checkbox label="侧翻" @update:focused="onUpdate" v-model="tippedOverRef" hide-details></v-checkbox>
+          <v-checkbox label="失去移动能力" @change="onUpdate" v-model="diedRef" hide-details></v-checkbox>
+          <v-checkbox label="侧翻" @change="onUpdate" v-model="tippedOverRef" hide-details></v-checkbox>
         </v-container>
       </v-sheet>
     </v-row>
