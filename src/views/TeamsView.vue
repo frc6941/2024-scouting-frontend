@@ -1,3 +1,3 @@
 <template>
-  <p>A</p>
+  <p></p>
 </template>

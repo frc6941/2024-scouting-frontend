@@ -48,6 +48,7 @@ const emits = defineEmits<{
 }>()
 
 function onUpdate() {
+  console.log(allianceRobotRef.value)
   emits(
     'change', 
     scouterRef.value,
@@ -75,7 +76,7 @@ function onUpdate() {
           <v-text-field label="Scouter" @update:focused="onUpdate" v-model="scouterRef"></v-text-field>
           <v-text-field label="比赛编号" @update:focused="onUpdate" v-model="matchNumberRef"></v-text-field>
           <v-text-field label="队号" @update:focused="onUpdate" v-model="teamNumberRef"></v-text-field>
-          <v-select label="联盟 & Robot" @update:focused="onUpdate" :items="robots" v-model="allianceRobotRef" hide-details></v-select>
+          <v-select label="联盟 & Robot" @update="onUpdate" :items="robots" v-model="allianceRobotRef" hide-details></v-select>
         </v-container>
       </v-sheet>
     </v-row>

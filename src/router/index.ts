@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ScoutingView from '../views/ScoutingView.vue'
-import AnalyzeView from '@/views/AnalyzeView.vue'
+import TeamsView from '@/views/TeamsView.vue'
 
 export const routes = [
   {
@@ -9,9 +9,9 @@ export const routes = [
     component: ScoutingView
   },
   {
-    path: '/analyze',
-    name: 'Analyze',
-    component: AnalyzeView
+    path: '/teams',
+    name: 'Teams',
+    component: TeamsView
   }
 ]
 
