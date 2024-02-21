@@ -10,21 +10,30 @@ const robots = [
   "Blue 3",
 ]
 
+const props = defineProps<{
+  scouter: string,
+  matchNumber: string,
+  teamNumber: string,
+  allianceRobot: string,
+  hpAtAmp: boolean,
+  robotAbsent: boolean
+}>()
+
 const form = {
-  scouter: '',
-  matchNumber: '',
-  teamNumber: '',
-  allianceRobot: '',
-  hpAtAmp: false,
-  robotAbsent: false
+  scouter: props.scouter,
+  matchNumber: props.matchNumber,
+  teamNumber: props.teamNumber,
+  allianceRobot: props.allianceRobot,
+  hpAtAmp: props.hpAtAmp,
+  robotAbsent: props.robotAbsent
 }
 
-const scouter = ref(form.scouter)
-const matchNumber = ref(form.matchNumber)
-const teamNumber = ref(form.teamNumber)
-const allianceRobot = ref(form.allianceRobot)
-const hpAtAmp = ref(form.hpAtAmp)
-const robotAbsent = ref(form.robotAbsent)
+const scouterRef = ref(form.scouter)
+const matchNumberRef = ref(form.matchNumber)
+const teamNumberRef = ref(form.teamNumber)
+const allianceRobotRef = ref(form.allianceRobot)
+const hpAtAmpRef = ref(form.hpAtAmp)
+const robotAbsentRef = ref(form.robotAbsent)
 
 const emits = defineEmits<{
   (
@@ -41,12 +50,12 @@ const emits = defineEmits<{
 function onUpdate() {
   emits(
     'change', 
-    scouter.value,
-    matchNumber.value,
-    teamNumber.value,
-    allianceRobot.value,
-    hpAtAmp.value,
-    robotAbsent.value
+    scouterRef.value,
+    matchNumberRef.value,
+    teamNumberRef.value,
+    allianceRobotRef.value,
+    hpAtAmpRef.value,
+    robotAbsentRef.value
   )
 }
 </script>
@@ -63,18 +72,18 @@ function onUpdate() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
-          <v-text-field label="Scouter" @update:model-value="onUpdate" v-model="scouter"></v-text-field>
-          <v-text-field label="比赛编号" @update:model-value="onUpdate" v-model="matchNumber"></v-text-field>
-          <v-text-field label="队号" @update:model-value="onUpdate" v-model="teamNumber"></v-text-field>
-          <v-select label="联盟 & Robot" @update:model-value="onUpdate" :items="robots" v-model="allianceRobot" hide-details></v-select>
+          <v-text-field label="Scouter" @update:focused="onUpdate" v-model="scouterRef"></v-text-field>
+          <v-text-field label="比赛编号" @update:focused="onUpdate" v-model="matchNumberRef"></v-text-field>
+          <v-text-field label="队号" @update:focused="onUpdate" v-model="teamNumberRef"></v-text-field>
+          <v-select label="联盟 & Robot" @update:focused="onUpdate" :items="robots" v-model="allianceRobotRef" hide-details></v-select>
         </v-container>
       </v-sheet>
     </v-row>
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container class="pt-0 pb-0">
-          <v-checkbox label="HP 是否在 Amp" v-model="hpAtAmp" hide-details></v-checkbox>
-          <v-checkbox label="机器不在现场" v-model="robotAbsent" hide-details></v-checkbox>
+          <v-checkbox label="HP 是否在 Amp" @update:focused="onUpdate" v-model="hpAtAmpRef" hide-details></v-checkbox>
+          <v-checkbox label="机器不在现场" @update:focused="onUpdate" v-model="robotAbsentRef" hide-details></v-checkbox>
         </v-container>
       </v-sheet>
     </v-row>

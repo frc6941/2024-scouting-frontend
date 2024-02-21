@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const props = defineProps<{
+  score: number
+}>()
+
 const emits = defineEmits<{
   (e: 'change', score: number): void
 }>()
 
-const score = ref(0)
+const score = ref(props.score)
 
 function plus() {
   score.value += 1

@@ -2,14 +2,24 @@
 import { ref } from 'vue';
 import ScoreCounter from '@/components/ScoreCounter.vue'
 
+const props = defineProps<{
+  coopertition: boolean,
+  ampScores: number,
+  ampMissed: number,
+  speakerScore: number,
+  speakerMissed: number,
+  trapScored: number,
+  foul: number
+}>()
+
 const form = {
-  coopertition: false,
-  ampScores: 0,
-  ampMissed: 0,
-  speakerScore: 0,
-  speakerMissed: 0,
-  trapScored: 0,
-  foul: 0
+  coopertition: props.coopertition,
+  ampScores: props.ampScores,
+  ampMissed: props.ampMissed,
+  speakerScore: props.speakerScore,
+  speakerMissed: props.speakerMissed,
+  trapScored: props.trapScored,
+  foul: props.foul
 }
 
 const emits = defineEmits<{
@@ -25,54 +35,54 @@ const emits = defineEmits<{
   ): void
 }>()
 
-const coopertition = ref(form.coopertition)
-const ampScores = ref(form.ampScores)
-const ampMissed = ref(form.ampMissed)
-const speakerScore = ref(form.speakerScore)
-const speakerMissed = ref(form.speakerMissed)
-const foul = ref(form.foul)
-const trapScored = ref(form.trapScored)
+const coopertitionRef = ref(form.coopertition)
+const ampScoresRef = ref(form.ampScores)
+const ampMissedRef = ref(form.ampMissed)
+const speakerScoreRef = ref(form.speakerScore)
+const speakerMissedRef = ref(form.speakerMissed)
+const foulRef = ref(form.foul)
+const trapScoredRef = ref(form.trapScored)
 
 function onAmpScoreChange(score: number) {
-  ampScores.value = score
+  ampScoresRef.value = score
   onChange()
 }
 
 function onAmpMissedChange(score: number) {
-  ampMissed.value = score
+  ampMissedRef.value = score
   onChange()
 }
 
 function onSpeakerScoreChange(score: number) {
-  speakerScore.value = score
+  speakerScoreRef.value = score
   onChange()
 }
 
 function onSpeakerMissedChange(score: number) {
-  speakerMissed.value = score
+  speakerMissedRef.value = score
   onChange()
 }
 
 function onFoulChange(score: number) {
-  foul.value = score
+  foulRef.value = score
   onChange()
 }
 
 function onTrapScoreChange(score: number) {
-  trapScored.value = score
+  trapScoredRef.value = score
   onChange()
 }
 
 function onChange() {
   emits(
     'change', 
-    coopertition.value,
-    ampScores.value, 
-    ampMissed.value, 
-    speakerScore.value, 
-    speakerMissed.value, 
-    trapScored.value,
-    foul.value
+    coopertitionRef.value,
+    ampScoresRef.value, 
+    ampMissedRef.value, 
+    speakerScoreRef.value, 
+    speakerMissedRef.value, 
+    trapScoredRef.value,
+    foulRef.value
   )
 }
 </script>
@@ -89,7 +99,7 @@ function onChange() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container class="pt-0 pb-0">
-          <v-checkbox label="Coopertition" v-model:focused="coopertition" hide-details></v-checkbox>
+          <v-checkbox label="Coopertition" @update:focused="onChange" v-model="coopertitionRef" hide-details></v-checkbox>
         </v-container>
       </v-sheet>
     </v-row>
@@ -99,7 +109,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Amp 得分</h4>
           </v-row>
-          <ScoreCounter @change="onAmpScoreChange"></ScoreCounter>
+          <ScoreCounter :score="form.ampScores" @change="onAmpScoreChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -109,7 +119,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Amp 未投进</h4>
           </v-row>
-          <ScoreCounter @change="onAmpMissedChange"></ScoreCounter>
+          <ScoreCounter :score="form.ampMissed" @change="onAmpMissedChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -119,7 +129,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Speaker 得分</h4>
           </v-row>
-          <ScoreCounter @change="onSpeakerScoreChange"></ScoreCounter>
+          <ScoreCounter :score="form.speakerScore" @change="onSpeakerScoreChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -129,7 +139,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Speaker 未投进</h4>
           </v-row>
-          <ScoreCounter @change="onSpeakerMissedChange"></ScoreCounter>
+          <ScoreCounter :score="form.speakerMissed" @change="onSpeakerMissedChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -139,7 +149,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Trap 得分</h4>
           </v-row>
-          <ScoreCounter @change="onTrapScoreChange"></ScoreCounter>
+          <ScoreCounter :score="form.trapScored" @change="onTrapScoreChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -149,7 +159,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>犯规</h4>
           </v-row>
-          <ScoreCounter @change="onFoulChange"></ScoreCounter>
+          <ScoreCounter :score="form.foul" @change="onFoulChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
