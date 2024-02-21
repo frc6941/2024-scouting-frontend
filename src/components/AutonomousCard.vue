@@ -2,13 +2,13 @@
 import ScoreCounter from "@/components/ScoreCounter.vue"
 import { ref } from "vue";
 
-const props = defineProps<{
-  ampScores: number,
-  ampMissed: number,
-  speakerScore: number,
-  speakerMissed: number,
-  foul: number
-}>()
+const form = {
+  ampScores: 0,
+  ampMissed: 0,
+  speakerScore: 0,
+  speakerMissed: 0,
+  foul: 0
+}
 
 const emits = defineEmits<{
   (
@@ -21,14 +21,34 @@ const emits = defineEmits<{
   ): void
 }>()
 
-const ampScores = ref(props.ampScores)
-const ampMissed = ref(props.ampMissed)
-const speakerScore = ref(props.speakerScore)
-const speakerMissed = ref(props.speakerMissed)
-const foul = ref(props.foul)
+const ampScores = ref(form.ampScores)
+const ampMissed = ref(form.ampMissed)
+const speakerScore = ref(form.speakerScore)
+const speakerMissed = ref(form.speakerMissed)
+const foul = ref(form.foul)
 
 function onAmpScoreChange(score: number) {
   ampScores.value = score
+  onChange()
+}
+
+function onAmpMissedChange(score: number) {
+  ampMissed.value = score
+  onChange()
+}
+
+function onSpeakerScoreChange(score: number) {
+  speakerScore.value = score
+  onChange()
+}
+
+function onSpeakerMissedChange(score: number) {
+  speakerMissed.value = score
+  onChange()
+}
+
+function onFoulChange(score: number) {
+  foul.value = score
   onChange()
 }
 
@@ -66,7 +86,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Amp 得分</h4>
           </v-row>
-          <ScoreCounter :score="props.ampScores" @change="onAmpScoreChange"></ScoreCounter>
+          <ScoreCounter @change="onAmpScoreChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -76,7 +96,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Amp 未投进</h4>
           </v-row>
-          <ScoreCounter :score="props.ampMissed"></ScoreCounter>
+          <ScoreCounter @change="onAmpMissedChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -86,7 +106,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Speaker 得分</h4>
           </v-row>
-          <ScoreCounter :score="props.speakerScore"></ScoreCounter>
+          <ScoreCounter @change="onSpeakerScoreChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -96,7 +116,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>Speaker 未投进</h4>
           </v-row>
-          <ScoreCounter :score="props.speakerMissed"></ScoreCounter>
+          <ScoreCounter @change="onSpeakerMissedChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>
@@ -106,7 +126,7 @@ function onChange() {
           <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1">
             <h4>犯规</h4>
           </v-row>
-          <ScoreCounter :score="props.foul" ></ScoreCounter>
+          <ScoreCounter @change="onFoulChange"></ScoreCounter>
         </v-container>
       </v-sheet>
     </v-row>

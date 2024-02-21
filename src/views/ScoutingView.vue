@@ -3,11 +3,33 @@ import PreMatchCard from '@/components/PreMatchCard.vue';
 import AutonomousCard from '@/components/AutonomousCard.vue'
 
 const form = {
+  scouter: '',
+  matchNumber: '',
+  teamNumber: '',
+  allianceRobot: '',
+  hpAtAmp: false,
+  robotAbsent: false,
   autoAmpScores: 0,
   autoAmpMissed: 0,
   autoSpeakerScore: 0,
   autoSpeakerMissed: 0,
   autoFoul: 0
+}
+
+function onPreMatchChange(
+  scouter: string,
+  matchNumber: string,
+  teamNumber: string,
+  allianceRobot: string,
+  hpAtAmp: boolean,
+  robotAbsent: boolean
+) {
+  form.scouter = scouter
+  form.matchNumber = matchNumber
+  form.teamNumber = teamNumber
+  form.allianceRobot = allianceRobot
+  form.hpAtAmp = hpAtAmp
+  form.robotAbsent = robotAbsent
 }
 
 function onAutonomousChange(
@@ -29,17 +51,10 @@ function onAutonomousChange(
 <template>
   <v-row class="ml-6 mr-6 mt-1">
     <v-col>
-      <PreMatchCard></PreMatchCard>
+      <PreMatchCard @change="onPreMatchChange"></PreMatchCard>
     </v-col>
     <v-col>
-      <AutonomousCard 
-        :amp-scores="form.autoAmpScores"
-        :amp-missed="form.autoAmpMissed"
-        :speaker-score="form.autoSpeakerScore"
-        :speaker-missed="form.autoSpeakerMissed"
-        :foul="form.autoFoul"
-        @change="onAutonomousChange"
-      ></AutonomousCard>
+      <AutonomousCard @change="onAutonomousChange"></AutonomousCard>
     </v-col>
     <v-col>
       <PreMatchCard></PreMatchCard>

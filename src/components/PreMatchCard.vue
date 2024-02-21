@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const robots = [
   "Red 1",
   "Red 2",
@@ -7,6 +9,46 @@ const robots = [
   "Blue 2",
   "Blue 3",
 ]
+
+const form = {
+  scouter: '',
+  matchNumber: '',
+  teamNumber: '',
+  allianceRobot: '',
+  hpAtAmp: false,
+  robotAbsent: false
+}
+
+const scouter = ref(form.scouter)
+const matchNumber = ref(form.matchNumber)
+const teamNumber = ref(form.teamNumber)
+const allianceRobot = ref(form.allianceRobot)
+const hpAtAmp = ref(form.hpAtAmp)
+const robotAbsent = ref(form.robotAbsent)
+
+const emits = defineEmits<{
+  (
+    e: 'change',
+    scouter: string,
+    matchNumber: string,
+    teamNumber: string,
+    allianceRobot: string,
+    hpAtAmp: boolean,
+    robotAbsent: boolean
+  ): void
+}>()
+
+function onClick() {
+  emits(
+    'change', 
+    scouter.value,
+    matchNumber.value,
+    teamNumber.value,
+    allianceRobot.value,
+    hpAtAmp.value,
+    robotAbsent.value
+  )
+}
 </script>
 
 <template>
@@ -21,18 +63,18 @@ const robots = [
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
-          <v-text-field label="Scouter"></v-text-field>
-          <v-text-field label="比赛编号"></v-text-field>
-          <v-text-field label="队号"></v-text-field>
-          <v-select label="联盟 & Robot" :items="robots" hide-details></v-select>
+          <v-text-field label="Scouter" @click="onClick" v-model="scouter"></v-text-field>
+          <v-text-field label="比赛编号" @click="onClick" v-model="matchNumber"></v-text-field>
+          <v-text-field label="队号" @click="onClick" v-model="teamNumber"></v-text-field>
+          <v-select label="联盟 & Robot" @click="onClick" :items="robots" v-model="allianceRobot" hide-details></v-select>
         </v-container>
       </v-sheet>
     </v-row>
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container class="pt-0 pb-0">
-          <v-checkbox label="HP 是否在 Amp" hide-details></v-checkbox>
-          <v-checkbox label="机器不在现场" hide-details></v-checkbox>
+          <v-checkbox label="HP 是否在 Amp" v-model="hpAtAmp" hide-details></v-checkbox>
+          <v-checkbox label="机器不在现场" v-model="robotAbsent" hide-details></v-checkbox>
         </v-container>
       </v-sheet>
     </v-row>
