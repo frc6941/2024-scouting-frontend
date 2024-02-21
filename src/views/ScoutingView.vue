@@ -10,6 +10,20 @@ const form = {
   autoFoul: 0
 }
 
+function onAutonomousChange(
+  ampScores: number, 
+  ampMissed: number, 
+  speakerScore: number, 
+  speakerMissed: number, 
+  foul: number
+) {
+  form.autoAmpScores = ampScores
+  form.autoAmpMissed = ampMissed
+  form.autoSpeakerScore = speakerScore
+  form.autoSpeakerMissed = speakerMissed
+  form.autoFoul = foul
+}
+
 </script>
 
 <template>
@@ -24,7 +38,7 @@ const form = {
         :speaker-score="form.autoSpeakerScore"
         :speaker-missed="form.autoSpeakerMissed"
         :foul="form.autoFoul"
-        @click="console.log(form.autoAmpScores)"
+        @change="onAutonomousChange"
       ></AutonomousCard>
     </v-col>
     <v-col>

@@ -5,14 +5,20 @@ const props = defineProps<{
   score: number
 }>()
 
+const emits = defineEmits<{
+  (e: 'change', score: number): void
+}>()
+
 const score = ref(props.score)
 
 function plus() {
   score.value += 1
+  emits("change", score.value)
 }
 
 function minus() {
   score.value -= 1
+  emits("change", score.value)
 }
 </script>
 
