@@ -2,6 +2,7 @@
 import PreMatchCard from '@/components/PreMatchCard.vue';
 import AutonomousCard from '@/components/AutonomousCard.vue'
 import TeleopCard from '@/components/TeleopCard.vue'
+import EndGameCard from '@/components/EndGameCard.vue';
 
 const form = {
   scouter: '',
@@ -25,6 +26,9 @@ const form = {
   teleopSpeakerMissed: 0,
   teleopTrapScored: 0,
   teleopFoul: 0,
+
+  endPosition: '',
+  harmony: ''
 }
 
 function onPreMatchChange(
@@ -77,6 +81,14 @@ function onTeleopChange(
   form.teleopFoul = foul
 }
 
+function onEndGameChange(
+  endPosition: string,
+  harmony: string
+) {
+  form.endPosition = endPosition
+  form.harmony = harmony
+}
+
 </script>
 
 <template>
@@ -91,7 +103,7 @@ function onTeleopChange(
       <TeleopCard @change="onTeleopChange"></TeleopCard>
     </v-col>
     <v-col>
-      <PreMatchCard></PreMatchCard>
+      <EndGameCard @change="onEndGameChange"></EndGameCard>
     </v-col>
     <v-col>
       <PreMatchCard></PreMatchCard>
