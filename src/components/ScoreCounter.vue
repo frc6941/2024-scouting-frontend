@@ -13,6 +13,9 @@ function plus() {
 }
 
 function minus() {
+  if (score.value == 0) {
+    return
+  }
   score.value -= 1
   emits("change", score.value)
 }
