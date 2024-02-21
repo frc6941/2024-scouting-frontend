@@ -5,11 +5,15 @@ import TeleopCard from '@/components/TeleopCard.vue'
 import EndGameCard from '@/components/EndGameCard.vue';
 import PostMatchCard from '@/components/PostMatchCard.vue';
 
+import axios from 'axios'
+
+import queryString from 'query-string';
+
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie'
 
 const savedForm = getCookie('form')
 
-interface Form {
+interface ScoutingDataUploadForm {
   scouter: string,
   matchNumber: string,
   teamNumber: string,
@@ -43,7 +47,7 @@ interface Form {
   comments: string
 }
 
-let form: Form
+let form: ScoutingDataUploadForm
 
 if (savedForm == undefined) {
   form = {
@@ -205,7 +209,16 @@ function onPostMatchChange(
 }
 
 function onSubmit() {
-  removeCookie('form')
+  axios
+    .post('http://localhost:8000/api/record', queryString.stringify(form))
+    .then(() => {
+      removeCookie('form')
+      location.reload()
+    })
+    .catch(e => {
+      console.log(e)
+      alert(e)
+    })
 }
 </script>
 
