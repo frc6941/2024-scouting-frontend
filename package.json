@@ -18,6 +18,7 @@
     "query-string": "^8.2.0",
     "typescript-cookie": "^1.0.6",
     "vue": "^3.4.15",
+    "vue-echarts": "^6.6.9",
     "vue-router": "^4.2.5",
     "vuetify": "^3.5.4"
   },
