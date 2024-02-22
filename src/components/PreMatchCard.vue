@@ -60,14 +60,12 @@ const emits = defineEmits<{
 }>()
 
 function onUpdate() {
-  if (matchTypeRef.value && matchIdRef.value) {
-    if (matchTypeRef.value === "训练赛") {
-      matchNumberRef.value = `prac${matchIdRef.value}`  
-    } else if (matchTypeRef.value == "资格赛") {
-      matchNumberRef.value = `qual${matchIdRef.value}`
-    } 
-    console.log(matchNumberRef.value)
-  }
+  if (matchTypeRef.value === "训练赛") {
+    matchNumberRef.value = `Prac ${matchIdRef.value}`  
+  } else if (matchTypeRef.value == "资格赛") {
+    matchNumberRef.value = `Quals ${matchIdRef.value}`
+  } 
+  console.log(matchNumberRef.value)
   emits(
     'change', 
     scouterRef.value,
