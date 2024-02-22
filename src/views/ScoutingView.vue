@@ -39,8 +39,12 @@ interface ScoutingDataUploadForm {
   endPosition: string,
   harmony: string,
 
-  offenseSkill: string,
-  defenseSkill: string,
+  offenseSkill: number,
+  defenseSkill: number,
+
+  humanPlayerRating: number,
+  driverRating: number,
+  
   died: boolean,
   tippedOver: boolean,
   card: string,
@@ -76,8 +80,12 @@ if (savedForm == undefined) {
     endPosition: '',
     harmony: '',
 
-    offenseSkill: '',
-    defenseSkill: '',
+    offenseSkill: 0,
+    defenseSkill: 0,
+
+    humanPlayerRating: 0,
+    driverRating: 0,
+
     died: false,
     tippedOver: false,
     card: '',
@@ -119,8 +127,12 @@ function onReset() {
     endPosition: '',
     harmony: '',
 
-    offenseSkill: '',
-    defenseSkill: '',
+    offenseSkill: 0,
+    defenseSkill: 0,
+
+    humanPlayerRating: 0,
+    driverRating: 0,
+
     died: false,
     tippedOver: false,
     card: '',
@@ -192,8 +204,10 @@ function onEndGameChange(
 }
 
 function onPostMatchChange(
-  offenseSkill: string, 
-  defenseSkill: string, 
+  offenseSkill: number, 
+  defenseSkill: number,
+  humanPlayerRating: number, 
+  driverRating: number,
   died: boolean, 
   tippedOver: boolean, 
   card: string,
@@ -201,6 +215,8 @@ function onPostMatchChange(
 ) {
   form.offenseSkill = offenseSkill
   form.defenseSkill = defenseSkill
+  form.humanPlayerRating = humanPlayerRating
+  form.driverRating = driverRating
   form.died = died
   form.tippedOver = tippedOver
   form.card = card,
@@ -266,6 +282,8 @@ function onSubmit() {
       <PostMatchCard 
         :offense-skill="form.offenseSkill"
         :defense-skill="form.defenseSkill"
+        :human-player-rating="form.humanPlayerRating"
+        :driver-rating="form.driverRating"
         :died="form.died"
         :card="form.card"
         :comments="form.comments"
