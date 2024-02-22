@@ -50,7 +50,7 @@ const option: Ref<EChartsOption> = ref({
   },
   tooltip: {
     trigger: 'item',
-    formatter: '命中率: {c}'
+    formatter: '命中率: {c}%'
   },
   xAxis: {
     data: props.xAxis

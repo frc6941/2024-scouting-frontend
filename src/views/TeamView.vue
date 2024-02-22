@@ -53,14 +53,14 @@ function calculateCharts() {
 
     speakerSuccessPercentXAxis.value.push(data.matchNumber)
     if ((data.teleopSpeakerScored + data.teleopSpeakerMissed) != 0) {
-      speakerSuccessPercentData.value.push(data.teleopSpeakerScored / (data.teleopSpeakerScored + data.teleopSpeakerMissed))
+      speakerSuccessPercentData.value.push(Math.round((data.teleopSpeakerScored / (data.teleopSpeakerScored + data.teleopSpeakerMissed)) * 100))
     } else {
       speakerSuccessPercentData.value.push(0)
     }
 
     ampSuccessPercentXAxis.value.push(data.matchNumber)
     if ((data.teleopAmpScored + data.teleopAmpMissed) != 0) {
-      ampSuccessPercentData.value.push(data.teleopAmpScored / (data.teleopAmpScored + data.teleopAmpMissed))
+      ampSuccessPercentData.value.push(Math.round((data.teleopAmpScored / (data.teleopAmpScored + data.teleopAmpMissed)) * 100))
     } else {
       ampSuccessPercentData.value.push(0)
     }
