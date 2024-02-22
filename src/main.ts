@@ -31,3 +31,5 @@ app.use(vuetify)
 app.component('v-chart', VueECharts)
 
 app.mount('#app')
+
+export const apiBaseUrl = 'http://localhost:8000'

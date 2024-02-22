@@ -10,10 +10,11 @@ import axios from 'axios'
 import queryString from 'query-string';
 
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie'
+import { apiBaseUrl } from '@/main';
 
 const savedForm = getCookie('form')
 
-interface ScoutingDataUploadForm {
+export interface ScoutingDataUploadForm {
   scouter: string,
   matchNumber: string,
   teamNumber: string,
@@ -22,16 +23,16 @@ interface ScoutingDataUploadForm {
   robotAbsent: boolean,
   
   mobile: boolean,
-  autoAmpScores: number,
+  autoAmpScored: number,
   autoAmpMissed: number,
-  autoSpeakerScore: number,
+  autoSpeakerScored: number,
   autoSpeakerMissed: number,
   autoFoul: number,
 
   coopertition: boolean,
-  teleopAmpScores: number,
+  teleopAmpScored: number,
   teleopAmpMissed: number,
-  teleopSpeakerScore: number,
+  teleopSpeakerScored: number,
   teleopSpeakerMissed: number,
   teleopTrapScored: number,
   teleopFoul: number,
@@ -44,6 +45,7 @@ interface ScoutingDataUploadForm {
 
   humanPlayerRating: number,
   driverRating: number,
+  strategyRating: number,
   
   died: boolean,
   tippedOver: boolean,
@@ -63,16 +65,16 @@ if (savedForm == undefined) {
     robotAbsent: false,
   
     mobile: false,
-    autoAmpScores: 0,
+    autoAmpScored: 0,
     autoAmpMissed: 0,
-    autoSpeakerScore: 0,
+    autoSpeakerScored: 0,
     autoSpeakerMissed: 0,
     autoFoul: 0,
 
     coopertition: false,
-    teleopAmpScores: 0,
+    teleopAmpScored: 0,
     teleopAmpMissed: 0,
-    teleopSpeakerScore: 0,
+    teleopSpeakerScored: 0,
     teleopSpeakerMissed: 0,
     teleopTrapScored: 0,
     teleopFoul: 0,
@@ -110,16 +112,16 @@ function onReset() {
     robotAbsent: false,
   
     mobile: false,
-    autoAmpScores: 0,
+    autoAmpScored: 0,
     autoAmpMissed: 0,
-    autoSpeakerScore: 0,
+    autoSpeakerScored: 0,
     autoSpeakerMissed: 0,
     autoFoul: 0,
 
     coopertition: false,
-    teleopAmpScores: 0,
+    teleopAmpScored: 0,
     teleopAmpMissed: 0,
-    teleopSpeakerScore: 0,
+    teleopSpeakerScored: 0,
     teleopSpeakerMissed: 0,
     teleopTrapScored: 0,
     teleopFoul: 0,
@@ -167,9 +169,9 @@ function onAutonomousChange(
   foul: number
 ) {
   form.mobile = mobile
-  form.autoAmpScores = ampScores
+  form.autoAmpScored = ampScores
   form.autoAmpMissed = ampMissed
-  form.autoSpeakerScore = speakerScore
+  form.autoSpeakerScored = speakerScore
   form.autoSpeakerMissed = speakerMissed
   form.autoFoul = foul
   onChange()
@@ -185,9 +187,9 @@ function onTeleopChange(
   foul: number
 ) {
   form.coopertition = coopertition
-  form.teleopAmpScores = ampScores
+  form.teleopAmpScored = ampScores
   form.teleopAmpMissed = ampMissed
-  form.teleopSpeakerScore = speakerScore
+  form.teleopSpeakerScored = speakerScore
   form.teleopSpeakerMissed = speakerMissed
   form.teleopTrapScored = trapScore
   form.teleopFoul = foul
@@ -226,7 +228,7 @@ function onPostMatchChange(
 
 function onSubmit() {
   axios
-    .post('http://localhost:8000/api/record', queryString.stringify(form))
+    .post(apiBaseUrl + '/api/record', queryString.stringify(form))
     .then(() => {
       removeCookie('form')
       location.reload()
@@ -254,18 +256,18 @@ function onSubmit() {
     <v-col>
       <AutonomousCard 
         :mobile="form.mobile"
-        :ampScores="form.autoAmpScores"
+        :ampScores="form.autoAmpScored"
         :amp-missed="form.autoAmpMissed"
-        :speaker-score="form.autoSpeakerScore"
+        :speaker-score="form.autoSpeakerScored"
         :speaker-missed="form.autoSpeakerMissed"
         :foul="form.autoFoul"
         @change="onAutonomousChange"></AutonomousCard>
     </v-col>
     <v-col>
       <TeleopCard 
-        :amp-scores="form.teleopAmpScores"
+        :amp-scores="form.teleopAmpScored"
         :amp-missed="form.teleopAmpMissed"
-        :speaker-score="form.teleopSpeakerScore"
+        :speaker-score="form.teleopSpeakerScored"
         :speaker-missed="form.teleopSpeakerMissed"
         :foul="form.teleopFoul"
         :trap-scored="form.teleopTrapScored"

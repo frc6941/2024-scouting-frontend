@@ -16,7 +16,7 @@ export const routes = [
     component: TeamsView
   },
   {
-    path: '/team',
+    path: '/team/:id',
     name: '单队伍',
     component: TeamView
   },

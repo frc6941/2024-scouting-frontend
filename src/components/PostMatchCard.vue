@@ -80,7 +80,7 @@ function onUpdate() {
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
           <v-slider label="攻击能力" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="offenseSkillRef"></v-slider>
-          <v-slider label="防守能力" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="defenseSkillRef"></v-slider>
+          <v-slider label="防守能力" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="defenseSkillRef" hide-details></v-slider>
         </v-container>
       </v-sheet>
     </v-row>
@@ -88,7 +88,7 @@ function onUpdate() {
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
           <v-slider label="HP评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="humanPlayerRatingRef"></v-slider>
-          <v-slider label="Driver评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="driverRatingRef"></v-slider>
+          <v-slider label="Driver评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="driverRatingRef" hide-details></v-slider>
         </v-container>
       </v-sheet>
     </v-row>
