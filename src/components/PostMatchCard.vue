@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const skills = [
-  "不佳",
-  "平均水平",
-  "非常有效",
-  "未观测"
-]
-
 const cards = [
   "无",
   "黄牌",
@@ -15,8 +8,10 @@ const cards = [
 ]
 
 const props = defineProps<{
-  offenseSkill: string,
-  defenseSkill: string,
+  offenseSkill: number,
+  defenseSkill: number,
+  humanPlayerRating: number,
+  driverRating: number,
   died: boolean,
   tippedOver: boolean,
   card: string,
@@ -26,6 +21,8 @@ const props = defineProps<{
 const form = {
   offenseSkill: props.offenseSkill,
   defenseSkill: props.defenseSkill,
+  humanPlayerRating: props.humanPlayerRating,
+  driverRating: props.driverRating,
   died: props.died,
   tippedOver: props.tippedOver,
   card: props.card,
@@ -34,6 +31,8 @@ const form = {
 
 const offenseSkillRef = ref(form.offenseSkill)
 const defenseSkillRef = ref(form.defenseSkill)
+const humanPlayerRatingRef = ref(form.humanPlayerRating)
+const driverRatingRef = ref(form.driverRating)
 const diedRef = ref(form.died)
 const tippedOverRef = ref(form.tippedOver)
 const cardRef = ref(form.card)
@@ -42,8 +41,10 @@ const commentsRef = ref(form.comments)
 const emits = defineEmits<{
   (
     e: 'change', 
-    offenseSkill: string, 
-    defenseSkill: string, 
+    offenseSkill: number, 
+    defenseSkill: number,
+    humanPlayerRating: number,
+    driverRating: number,
     died: boolean, 
     tippedOver: boolean, 
     card: string,
@@ -56,6 +57,8 @@ function onUpdate() {
     'change', 
     offenseSkillRef.value, 
     defenseSkillRef.value,
+    humanPlayerRatingRef.value,
+    driverRatingRef.value,
     diedRef.value,
     tippedOverRef.value,
     cardRef.value,
@@ -76,8 +79,16 @@ function onUpdate() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
-          <v-select label="攻击能力" @update:focused="onUpdate" :items="skills" v-model="offenseSkillRef"></v-select>
-          <v-select label="防守能力" @update:focused="onUpdate" :items="skills" v-model="defenseSkillRef" hide-details></v-select>
+          <v-slider label="攻击能力" @update:focused="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="offenseSkillRef"></v-slider>
+          <v-slider label="防守能力" @update:focused="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="defenseSkillRef"></v-slider>
+        </v-container>
+      </v-sheet>
+    </v-row>
+    <v-row class="mt-6">
+      <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
+        <v-container>
+          <v-slider label="HP评分" @update:focused="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="humanPlayerRatingRef"></v-slider>
+          <v-slider label="Driver评分" @update:focused="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="driverRatingRef"></v-slider>
         </v-container>
       </v-sheet>
     </v-row>
