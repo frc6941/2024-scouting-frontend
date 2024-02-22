@@ -55,7 +55,7 @@ import TeamScorePercent from '@/components/TeamScorePercent.vue'
         <v-row class="mt-5">
           <SingleNumberCard
             data="100"
-            title="HP 平均得分"
+            title="战术平均得分"
           ></SingleNumberCard>
         </v-row>
       </v-col>

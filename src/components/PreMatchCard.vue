@@ -9,6 +9,10 @@ const robots = [
   "Blue 2",
   "Blue 3",
 ]
+const matchTypes = [
+  "Quals",
+  "Prac"
+]
 
 const props = defineProps<{
   scouter: string,
@@ -30,6 +34,7 @@ const form = {
 
 const scouterRef = ref(form.scouter)
 const matchNumberRef = ref(form.matchNumber)
+const matchTypeRef = ref('')
 const teamNumberRef = ref(form.teamNumber)
 const allianceRobotRef = ref(form.allianceRobot)
 const hpAtAmpRef = ref(form.hpAtAmp)
@@ -48,11 +53,10 @@ const emits = defineEmits<{
 }>()
 
 function onUpdate() {
-  console.log(allianceRobotRef.value)
   emits(
     'change', 
     scouterRef.value,
-    matchNumberRef.value,
+    matchTypeRef.value + ' ' + matchNumberRef.value,
     teamNumberRef.value,
     allianceRobotRef.value,
     hpAtAmpRef.value,
@@ -74,6 +78,7 @@ function onUpdate() {
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
           <v-text-field label="Scouter" @update:focused="onUpdate" v-model="scouterRef"></v-text-field>
+          <v-select label="比赛类型" @update="onUpdate" :items="matchTypes" v-model="matchTypeRef"></v-select>
           <v-text-field label="比赛编号" @update:focused="onUpdate" v-model="matchNumberRef"></v-text-field>
           <v-text-field label="队号" @update:focused="onUpdate" v-model="teamNumberRef"></v-text-field>
           <v-select label="联盟 & Robot" @update="onUpdate" :items="robots" v-model="allianceRobotRef" hide-details></v-select>
