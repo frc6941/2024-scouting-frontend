@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ScoutingView from '../views/ScoutingView.vue'
 import TeamsView from '@/views/TeamsView.vue'
 import OverView from '@/views/OverView.vue'
+import TeamView from '@/views/TeamView.vue'
 
 export const routes = [
   {
@@ -13,6 +14,11 @@ export const routes = [
     path: '/teams',
     name: '队伍',
     component: TeamsView
+  },
+  {
+    path: '/team',
+    name: '单队伍',
+    component: TeamView
   },
   {
     path: '/',
