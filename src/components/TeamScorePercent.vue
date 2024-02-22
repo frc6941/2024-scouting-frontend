@@ -38,7 +38,9 @@ type EChartsOption = ComposeOption<
 >
 
 const props = defineProps<{
-  title: string
+  title: string,
+  xAxis: Array<string>,
+  data: Array<number>
 }>()
 
 const option: Ref<EChartsOption> = ref({
@@ -51,12 +53,12 @@ const option: Ref<EChartsOption> = ref({
     formatter: '命中率: {c}'
   },
   xAxis: {
-    data: ['Prac 1', 'Prac 2', 'Prac 3', 'Quals 1', 'Quals 2', 'Quals 3', 'Quals 4', 'Quals 5', 'Quals 6', 'Quals 7', 'Quals 8', 'Quals 9', 'Quals 10', 'Quals 11',  'Quals 12']
+    data: props.xAxis
   },
   dataZoom: [
     {
       start: 0,
-      end: 40
+      end: 100
     }
   ],
   yAxis: {
@@ -64,7 +66,7 @@ const option: Ref<EChartsOption> = ref({
   },
   series: [
     {
-      data: [1, 2, 3, 4, 5, 6 ,7 ,8 ,9, 10, 11, 12, 13, 14, 15],
+      data: props.data,
       type: 'line'
     }
   ]

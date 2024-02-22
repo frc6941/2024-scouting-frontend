@@ -58,7 +58,7 @@ const option: Ref<EChartsOption> = ref({
   dataZoom: [
     {
       start: 0,
-      end: 40
+      end: 100
     }
   ],
   yAxis: {

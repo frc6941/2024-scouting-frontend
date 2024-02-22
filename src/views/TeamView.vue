@@ -12,7 +12,10 @@ import { useRoute } from 'vue-router';
 const teamData: Ref<Array<ScoutingDataUploadForm>> = ref([])
 
 axios.get(apiBaseUrl + '/api/record/team/' + useRoute().params.id)
-  .then(response => teamData.value = response.data)
+  .then(response => {
+    teamData.value = response.data
+    teamData.value.sort((a, b) => Number(a.matchNumber.split(' ')[1]) - Number(b.matchNumber.split(' ')[1]))
+  })
   .then(calculatePercent)
   .then(calculateRating)
   .then(calculateCharts)
@@ -30,10 +33,37 @@ const strategyAverageRating = ref(0)
 const speakerSuccessXAxis: Ref<Array<string>> = ref([])
 const speakerSuccessData: Ref<Array<number>> = ref([])
 
+const speakerSuccessPercentXAxis: Ref<Array<string>> = ref([])
+const speakerSuccessPercentData: Ref<Array<number>> = ref([])
+
+const ampSuccessXAxis: Ref<Array<string>> = ref([])
+const ampSuccessData: Ref<Array<number>> = ref([])
+
+const ampSuccessPercentXAxis: Ref<Array<string>> = ref([])
+const ampSuccessPercentData: Ref<Array<number>> = ref([])
+
+
 function calculateCharts() {
   for (const data of teamData.value) {
     speakerSuccessXAxis.value.push(data.matchNumber)
     speakerSuccessData.value.push(data.teleopSpeakerScored)
+
+    ampSuccessXAxis.value.push(data.matchNumber)
+    ampSuccessData.value.push(data.teleopAmpScored)
+
+    speakerSuccessPercentXAxis.value.push(data.matchNumber)
+    if ((data.teleopSpeakerScored + data.teleopSpeakerMissed) != 0) {
+      speakerSuccessPercentData.value.push(data.teleopSpeakerScored / (data.teleopSpeakerScored + data.teleopSpeakerMissed))
+    } else {
+      speakerSuccessPercentData.value.push(0)
+    }
+
+    ampSuccessPercentXAxis.value.push(data.matchNumber)
+    if ((data.teleopAmpScored + data.teleopAmpMissed) != 0) {
+      ampSuccessPercentData.value.push(data.teleopAmpScored / (data.teleopAmpScored + data.teleopAmpMissed))
+    } else {
+      ampSuccessPercentData.value.push(0)
+    }
   }
 }
 
@@ -163,22 +193,34 @@ function calculatePercent() {
         ></TeamScore>
       </v-col>
       <v-col>
-        <TeamScorePercent title="Speaker 命中率"></TeamScorePercent>
+        <TeamScorePercent
+          title="Speaker 命中率"
+          :x-axis="speakerSuccessPercentXAxis"
+          :data="speakerSuccessPercentData"
+        ></TeamScorePercent>
       </v-col>
     </v-row>
     <v-row class="ml-6 mr-6 mt-1">
       <v-col>
         <TeamScore
           title="Amp 命中数"
-          :x-axis="[]"
-          :data="[]"
+          :x-axis="ampSuccessXAxis"
+          :data="ampSuccessData"
         ></TeamScore>
       </v-col>
       <v-col>
-        <TeamScorePercent title="Amp 命中率"></TeamScorePercent>
+        <TeamScorePercent
+          title="Amp 命中率"
+          :x-axis="ampSuccessPercentXAxis"
+          :data="ampSuccessPercentData"
+        ></TeamScorePercent>
       </v-col>
       <v-col>
-        <TeamScorePercent title="Cycle 时间"></TeamScorePercent>
+        <TeamScorePercent
+          title="Cycle 时间"
+          :x-axis="ampSuccessPercentXAxis"
+          :data="ampSuccessPercentData"
+        ></TeamScorePercent>
       </v-col>
     </v-row>
   </v-container>
