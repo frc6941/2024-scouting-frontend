@@ -9,9 +9,15 @@ const robots = [
   "Blue 2",
   "Blue 3",
 ]
+const matchtype = [
+  "训练赛",
+  "资格赛",
+]
 
 const props = defineProps<{
   scouter: string,
+  matchType: string,
+  matchId: number,
   matchNumber: string,
   teamNumber: string,
   allianceRobot: string,
@@ -21,6 +27,8 @@ const props = defineProps<{
 
 const form = {
   scouter: props.scouter,
+  matchType: props.matchType,
+  matchId: props.matchId,
   matchNumber: props.matchNumber,
   teamNumber: props.teamNumber,
   allianceRobot: props.allianceRobot,
@@ -29,6 +37,8 @@ const form = {
 }
 
 const scouterRef = ref(form.scouter)
+const matchTypeRef = ref(form.matchType)
+const matchIdRef = ref(form.matchId)
 const matchNumberRef = ref(form.matchNumber)
 const teamNumberRef = ref(form.teamNumber)
 const allianceRobotRef = ref(form.allianceRobot)
@@ -39,6 +49,8 @@ const emits = defineEmits<{
   (
     e: 'change',
     scouter: string,
+    matchType: string,
+    matchId: number,
     matchNumber: string,
     teamNumber: string,
     allianceRobot: string,
@@ -48,10 +60,19 @@ const emits = defineEmits<{
 }>()
 
 function onUpdate() {
-  console.log(allianceRobotRef.value)
+  if (matchTypeRef.value && matchIdRef.value) {
+    if (matchTypeRef.value === "训练赛") {
+      matchNumberRef.value = `prac${matchIdRef.value}`  
+    } else if (matchTypeRef.value == "资格赛") {
+      matchNumberRef.value = `qual${matchIdRef.value}`
+    } 
+    console.log(matchNumberRef.value)
+  }
   emits(
     'change', 
     scouterRef.value,
+    matchTypeRef.value,
+    matchIdRef.value,
     matchNumberRef.value,
     teamNumberRef.value,
     allianceRobotRef.value,
@@ -74,7 +95,8 @@ function onUpdate() {
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
           <v-text-field label="Scouter" @update:focused="onUpdate" v-model="scouterRef"></v-text-field>
-          <v-text-field label="比赛编号" @update:focused="onUpdate" v-model="matchNumberRef"></v-text-field>
+          <v-select label="比赛类型" @update:focused="onUpdate" :items="matchtype" v-model="matchTypeRef"></v-select>
+          <v-text-field label="比赛编号" @update:focused="onUpdate" v-model.number="matchIdRef" type="number"></v-text-field>
           <v-text-field label="队号" @update:focused="onUpdate" v-model="teamNumberRef"></v-text-field>
           <v-select label="联盟 & Robot" @update="onUpdate" :items="robots" v-model="allianceRobotRef" hide-details></v-select>
         </v-container>
