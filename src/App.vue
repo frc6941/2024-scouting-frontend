@@ -20,5 +20,10 @@ const drawer = ref(false)
     <v-main>
       <RouterView></RouterView>
     </v-main>
+    <v-footer>
+      <v-col class="text-center mt-4">
+        © {{ new Date().getFullYear() }} — <strong>IronPulse 6941</strong>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
