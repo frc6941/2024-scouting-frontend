@@ -51,6 +51,9 @@ const ampSuccessData: Ref<Array<number>> = ref([])
 const ampSuccessPercentXAxis: Ref<Array<string>> = ref([])
 const ampSuccessPercentData: Ref<Array<number>> = ref([])
 
+const cycleTimeXAxis: Ref<Array<string>> = ref([])
+const cycleTimeData: Ref<Array<number>> = ref([])
+
 
 function calculateCharts() {
   for (const data of teamData.value) {
@@ -59,6 +62,9 @@ function calculateCharts() {
 
     ampSuccessXAxis.value.push(data.matchNumber)
     ampSuccessData.value.push(data.teleopAmpScored)
+
+    cycleTimeXAxis.value.push(data.matchNumber)
+    cycleTimeData.value.push(data.cycleTime)
 
     speakerSuccessPercentXAxis.value.push(data.matchNumber)
     if ((data.teleopSpeakerScored + data.teleopSpeakerMissed) != 0) {
@@ -227,8 +233,8 @@ function calculatePercent() {
       <v-col>
         <TeamScorePercent
           title="Cycle 时间"
-          :x-axis="ampSuccessPercentXAxis"
-          :data="ampSuccessPercentData"
+          :x-axis="cycleTimeXAxis"
+          :data="cycleTimeData"
         ></TeamScorePercent>
       </v-col>
     </v-row>
