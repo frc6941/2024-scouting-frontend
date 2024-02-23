@@ -231,11 +231,11 @@ function calculatePercent() {
         ></TeamScorePercent>
       </v-col>
       <v-col>
-        <TeamScorePercent
+        <TeamScore
           title="Cycle 时间"
           :x-axis="cycleTimeXAxis"
           :data="cycleTimeData"
-        ></TeamScorePercent>
+        ></TeamScore>
       </v-col>
     </v-row>
   </v-container>
