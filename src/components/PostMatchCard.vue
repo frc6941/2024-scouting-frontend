@@ -12,6 +12,8 @@ const props = defineProps<{
   defenseSkill: number,
   humanPlayerRating: number,
   driverRating: number,
+  strategyRating: number,
+  cycleTime: number,
   died: boolean,
   tippedOver: boolean,
   card: string,
@@ -23,6 +25,8 @@ const form = {
   defenseSkill: props.defenseSkill,
   humanPlayerRating: props.humanPlayerRating,
   driverRating: props.driverRating,
+  strategyRating: props.strategyRating,
+  cycleTime: props.cycleTime,
   died: props.died,
   tippedOver: props.tippedOver,
   card: props.card,
@@ -33,6 +37,8 @@ const offenseSkillRef = ref(form.offenseSkill)
 const defenseSkillRef = ref(form.defenseSkill)
 const humanPlayerRatingRef = ref(form.humanPlayerRating)
 const driverRatingRef = ref(form.driverRating)
+const strategyRatingRef = ref(form.strategyRating)
+const cycleTimeRef = ref(form.cycleTime)
 const diedRef = ref(form.died)
 const tippedOverRef = ref(form.tippedOver)
 const cardRef = ref(form.card)
@@ -45,6 +51,8 @@ const emits = defineEmits<{
     defenseSkill: number,
     humanPlayerRating: number,
     driverRating: number,
+    strategyRating: number,
+    cycleTime: number,
     died: boolean, 
     tippedOver: boolean, 
     card: string,
@@ -59,6 +67,8 @@ function onUpdate() {
     defenseSkillRef.value,
     humanPlayerRatingRef.value,
     driverRatingRef.value,
+    strategyRatingRef.value,
+    cycleTimeRef.value,
     diedRef.value,
     tippedOverRef.value,
     cardRef.value,
@@ -87,9 +97,15 @@ function onUpdate() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
-          <v-slider label="HP评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="humanPlayerRatingRef"></v-slider>
-          <v-slider label="Driver评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="driverRatingRef" hide-details></v-slider>
+          <v-slider label="HP 评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="humanPlayerRatingRef"></v-slider>
+          <v-slider label="Driver 评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="driverRatingRef"></v-slider>
+          <v-slider label="战术评分" @end="onUpdate" :min="0" :max="10" :step="1" thumb-label v-model="strategyRatingRef" hide-details></v-slider>
         </v-container>
+      </v-sheet>
+    </v-row>
+    <v-row class="mt-6">
+      <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
+        <v-text-field label="Cycle 时间" @update:focused="onUpdate" v-model="cycleTimeRef"></v-text-field>
       </v-sheet>
     </v-row>
     <v-row class="mt-6">

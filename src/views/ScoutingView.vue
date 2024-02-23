@@ -46,6 +46,7 @@ export interface ScoutingDataUploadForm {
   humanPlayerRating: number,
   driverRating: number,
   strategyRating: number,
+  cycleTime: number,
   
   died: boolean,
   tippedOver: boolean,
@@ -88,6 +89,7 @@ if (savedForm == undefined) {
     humanPlayerRating: 0,
     driverRating: 0,
     strategyRating: 0,
+    cycleTime: 0,
 
     died: false,
     tippedOver: false,
@@ -136,6 +138,7 @@ function onReset() {
     humanPlayerRating: 0,
     driverRating: 0,
     strategyRating: 0,
+    cycleTime: 0,
 
     died: false,
     tippedOver: false,
@@ -212,6 +215,8 @@ function onPostMatchChange(
   defenseSkill: number,
   humanPlayerRating: number, 
   driverRating: number,
+  strategyRating: number,
+  cycleTime: number,
   died: boolean, 
   tippedOver: boolean, 
   card: string,
@@ -221,6 +226,8 @@ function onPostMatchChange(
   form.defenseSkill = defenseSkill
   form.humanPlayerRating = humanPlayerRating
   form.driverRating = driverRating
+  form.strategyRating = strategyRating
+  form.cycleTime = cycleTime
   form.died = died
   form.tippedOver = tippedOver
   form.card = card,
@@ -288,6 +295,8 @@ function onSubmit() {
         :defense-skill="form.defenseSkill"
         :human-player-rating="form.humanPlayerRating"
         :driver-rating="form.driverRating"
+        :strategy-rating="form.strategyRating"
+        :cycle-time="form.cycleTime"
         :died="form.died"
         :card="form.card"
         :comments="form.comments"
