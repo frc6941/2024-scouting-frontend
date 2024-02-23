@@ -87,6 +87,7 @@ if (savedForm == undefined) {
 
     humanPlayerRating: 0,
     driverRating: 0,
+    strategyRating: 0,
 
     died: false,
     tippedOver: false,
@@ -134,6 +135,7 @@ function onReset() {
 
     humanPlayerRating: 0,
     driverRating: 0,
+    strategyRating: 0,
 
     died: false,
     tippedOver: false,
