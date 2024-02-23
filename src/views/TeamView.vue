@@ -2,6 +2,7 @@
 import SingleNumberCard from '@/components/SingleNumberCard.vue';
 import TeamScore from '@/components/TeamScore.vue';
 import TeamScorePercent from '@/components/TeamScorePercent.vue'
+import CycleTime from '@/components/CycleTime.vue'
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import type { ScoutingDataUploadForm } from './ScoutingView.vue';
@@ -38,6 +39,11 @@ const teleopAmpSuccessPercent = ref(0)
 const driverAverageRating = ref(0)
 const humanPlayerAverageRating = ref(0)
 const strategyAverageRating = ref(0)
+
+const averageOffenseSkill = ref(0)
+const averageDefenseSkill = ref(0)
+const averageCycleTime = ref(0)
+
 
 const speakerSuccessXAxis: Ref<Array<string>> = ref([])
 const speakerSuccessData: Ref<Array<number>> = ref([])
@@ -86,11 +92,17 @@ function calculateRating() {
   let totalDriverRating = 0
   let totalHumanPlayerRating = 0
   let totalStrategyRating = 0
+  let totalOffenseSkill = 0
+  let totalDefenseSkill = 0
+  let totalCycleTime = 0
 
   for (const data of teamData.value) {
     totalDriverRating += data.driverRating
     totalHumanPlayerRating += data.humanPlayerRating
     totalStrategyRating += data.strategyRating
+    totalOffenseSkill += data.offenseSkill
+    totalDefenseSkill += data.defenseSkill
+    totalCycleTime += data.cycleTime
   }
 
   const ratingNumber = teamData.value.length
@@ -98,6 +110,9 @@ function calculateRating() {
   driverAverageRating.value = Number((totalDriverRating / ratingNumber).toFixed(2))
   humanPlayerAverageRating.value = Number((totalHumanPlayerRating / ratingNumber).toFixed(2))
   strategyAverageRating.value = Number((totalStrategyRating / ratingNumber).toFixed(2))
+  averageOffenseSkill.value = Number((totalOffenseSkill / ratingNumber).toFixed(2))
+  averageDefenseSkill.value = Number((totalDefenseSkill / ratingNumber).toFixed(2))
+  averageCycleTime.value = Number((totalCycleTime / ratingNumber).toFixed(2))
 }
 
 function calculatePercent() {
@@ -183,20 +198,20 @@ function calculatePercent() {
       <v-col cols="2">
         <v-row class="mt-1">
           <SingleNumberCard
-            :data="driverAverageRating.toString()"
-            title="Driver 平均得分 (10 分)"
+            :data="driverAverageRating.toString() + ' / 10'"
+            title="Driver 平均得分"
           ></SingleNumberCard>
         </v-row>
         <v-row class="mt-5">
           <SingleNumberCard
-            :data="humanPlayerAverageRating.toString()"
-            title="HP 平均得分 (10 分)"
+            :data="humanPlayerAverageRating.toString() + ' / 10'"
+            title="HP 平均得分"
           ></SingleNumberCard>
         </v-row>
         <v-row class="mt-5">
           <SingleNumberCard
-            :data="strategyAverageRating.toString()"
-            title="战术平均得分 (10 分)"
+            :data="strategyAverageRating.toString() + ' / 10'"
+            title="战术平均得分"
           ></SingleNumberCard>
         </v-row>
       </v-col>
@@ -215,7 +230,27 @@ function calculatePercent() {
         ></TeamScorePercent>
       </v-col>
     </v-row>
-    <v-row class="ml-6 mr-6 mt-1">
+    <v-row class="ml-9 mr-6 mt-1">
+      <v-col cols="2">
+        <v-row class="mt-0">
+          <SingleNumberCard
+            title="平均 Cycle 时间"
+            :data="averageCycleTime.toString() + ' 秒'"
+          ></SingleNumberCard>
+        </v-row>
+        <v-row class="mt-5">
+          <SingleNumberCard
+            title="平均攻击能力"
+            :data="averageOffenseSkill.toString() + ' / 10'"
+          ></SingleNumberCard>
+        </v-row>
+        <v-row class="mt-5">
+          <SingleNumberCard
+            title="平均防守能力"
+            :data="averageDefenseSkill.toString() + ' / 10'"
+          ></SingleNumberCard>
+        </v-row>
+      </v-col>
       <v-col>
         <TeamScore
           title="Amp 命中数"
@@ -230,12 +265,14 @@ function calculatePercent() {
           :data="ampSuccessPercentData"
         ></TeamScorePercent>
       </v-col>
+    </v-row>
+    <v-row class="ml-6 mr-6 mt-1">
       <v-col>
-        <TeamScore
+        <CycleTime
           title="Cycle 时间 (秒)"
           :x-axis="cycleTimeXAxis"
           :data="cycleTimeData"
-        ></TeamScore>
+        ></CycleTime>
       </v-col>
     </v-row>
   </v-container>
