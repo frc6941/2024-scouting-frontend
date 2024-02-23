@@ -14,7 +14,16 @@ const teamData: Ref<Array<ScoutingDataUploadForm>> = ref([])
 axios.get(apiBaseUrl + '/api/record/team/' + useRoute().params.id)
   .then(response => {
     teamData.value = response.data
-    teamData.value.sort((a, b) => Number(a.matchNumber.split(' ')[1]) - Number(b.matchNumber.split(' ')[1]))
+    teamData.value.sort((a, b) => {
+      if (a.matchNumber.split(' ')[0] != b.matchNumber.split(' ')[0]) {
+        if (a.matchNumber.split(' ')[0] == 'Prac') {
+          return 1
+        } else {
+          return -1
+        }
+      }
+      return Number(a.matchNumber.split(' ')[1]) - Number(b.matchNumber.split(' ')[1])
+    })
   })
   .then(calculatePercent)
   .then(calculateRating)
