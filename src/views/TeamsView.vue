@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import TeamPreviewCard from '@/components/TeamPreivewCard.vue'
+import { apiBaseUrl } from '@/main';
 import axios from 'axios';
 import { type Ref, ref } from 'vue';
 
 const teams: Ref<Array<number>> = ref([])
 
-axios.get('http://localhost:8000/api/teams')
+axios.get(apiBaseUrl + '/api/teams')
   .then(response => teams.value = response.data)
   .catch(e => alert(e))
 </script>
