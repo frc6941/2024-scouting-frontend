@@ -106,7 +106,7 @@ function onUpdate() {
     <v-row class="mt-6">
       <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
         <v-container>
-          <v-text-field label="Cycle 时间" @update:focused="onUpdate" v-model="cycleTimeRef"></v-text-field>
+          <v-text-field label="Cycle 时间" @update:focused="onUpdate" v-model="cycleTimeRef" hide-details></v-text-field>
         </v-container>
       </v-sheet>
     </v-row>
