@@ -32,4 +32,4 @@ app.component('v-chart', VueECharts)
 
 app.mount('#app')
 
-export const apiBaseUrl = 'http://localhost:8000'
+export const apiBaseUrl = 'https://api.ironpulse.net'
