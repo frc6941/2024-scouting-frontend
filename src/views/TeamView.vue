@@ -184,19 +184,19 @@ function calculatePercent() {
         <v-row class="mt-1">
           <SingleNumberCard
             :data="driverAverageRating.toString()"
-            title="Driver 平均得分"
+            title="Driver 平均得分 (10 分)"
           ></SingleNumberCard>
         </v-row>
         <v-row class="mt-5">
           <SingleNumberCard
             :data="humanPlayerAverageRating.toString()"
-            title="HP 平均得分"
+            title="HP 平均得分 (10 分)"
           ></SingleNumberCard>
         </v-row>
         <v-row class="mt-5">
           <SingleNumberCard
             :data="strategyAverageRating.toString()"
-            title="战术平均得分"
+            title="战术平均得分 (10 分)"
           ></SingleNumberCard>
         </v-row>
       </v-col>
@@ -232,7 +232,7 @@ function calculatePercent() {
       </v-col>
       <v-col>
         <TeamScore
-          title="Cycle 时间"
+          title="Cycle 时间 (秒)"
           :x-axis="cycleTimeXAxis"
           :data="cycleTimeData"
         ></TeamScore>
