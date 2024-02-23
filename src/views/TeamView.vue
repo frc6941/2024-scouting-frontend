@@ -17,9 +17,9 @@ axios.get(apiBaseUrl + '/api/record/team/' + useRoute().params.id)
     teamData.value.sort((a, b) => {
       if (a.matchNumber.split(' ')[0] != b.matchNumber.split(' ')[0]) {
         if (a.matchNumber.split(' ')[0] == 'Prac') {
-          return 1
-        } else {
           return -1
+        } else {
+          return 1
         }
       }
       return Number(a.matchNumber.split(' ')[1]) - Number(b.matchNumber.split(' ')[1])
