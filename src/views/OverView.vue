@@ -2,6 +2,7 @@
 import { apiBaseUrl } from '@/main'
 import axios from 'axios'
 import { type Ref, ref } from 'vue'
+
 interface TotalTeamData {
   teamNumber: string
   numberOfRecords: number
@@ -10,6 +11,7 @@ interface TotalTeamData {
   totalEndGameScore: number
   totalDriverScore: number
 }
+
 export interface AverageTeamData {
   teamNumber: string
   numberOfRecords: number
@@ -18,6 +20,7 @@ export interface AverageTeamData {
   averageEndGameScore: number
   averageDriverScore: number
 }
+
 const endGameScoreMap: Map<string, number> = new Map([
   ['无爬升', 0],
   ['爬升失败', 1],
@@ -106,7 +109,17 @@ axios
   <v-container>
     <v-row class="ml-6 mr-6 mt-1">
       <v-data-table :items="averageTeamData" :headers="headers">
+        <template #item.teamNumber="{ item }">
+          <router-link :to="'/team/' + item.teamNumber">{{ item.teamNumber }}</router-link>
+        </template>
       </v-data-table>
     </v-row>
   </v-container>
 </template>
+
+<style scoped>
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+</style>

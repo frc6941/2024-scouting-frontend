@@ -274,6 +274,9 @@ function calculatePercent() {
           :data="cycleTimeData"
         ></CycleTime>
       </v-col>
+      <v-col>
+        
+      </v-col>
     </v-row>
   </v-container>
 </template>

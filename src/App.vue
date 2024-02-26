@@ -8,8 +8,9 @@ const drawer = ref(false)
   <v-app>
     <v-navigation-drawer v-model="drawer" temporary>
       <v-list density="compact" nav>
-        <v-list-item prepend-icon="mdi-view-agenda" title="概要" to="/" value="about"></v-list-item>
-        <v-list-item prepend-icon="mdi-pen" title="Scouting" to="/scouting" value="home"></v-list-item>
+        <v-list-item prepend-icon="mdi-view-agenda" title="概要" to="/" value="overview"></v-list-item>
+        <v-list-item prepend-icon="mdi-pen" title="Scouting" to="/scouting" value="scouting"></v-list-item>
+        <v-list-item prepend-icon="mdi-pen" title="Pit Scouting" to="/scouting-pit" value="pit-scouting"></v-list-item>
         <v-list-item prepend-icon="mdi-account-multiple" title="队伍" to="/teams" value="about"></v-list-item>
       </v-list>
     </v-navigation-drawer>
