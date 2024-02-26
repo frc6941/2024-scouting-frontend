@@ -12,5 +12,14 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    proxy: {
+      '/api/v2': {
+        target: 'https://sm.ms/api/v2',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/v2/, ''),
+      }
+    }
   }
 })
