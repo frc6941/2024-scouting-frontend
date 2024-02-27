@@ -13,7 +13,10 @@ const chassisTypeRef = ref('')
 const cycleTimeRef = ref(0)
 const autoTypeRef = ref('')
 
+const isLoading = ref(false)
+
 function onSubmit() {
+  isLoading.value = true
   if (robotPictureRef.value === undefined) {
     axios.post(apiBaseUrl + '/api/pit/team', queryString.stringify({
       teamNumber: teamNumberRef.value,
@@ -25,10 +28,12 @@ function onSubmit() {
       autoType: autoTypeRef.value,
       pictureUrl: ''
     })).then(() => {
+      isLoading.value = false
       location.reload()
     }).catch(e => {
       console.log(e)
       alert(e)
+      isLoading.value = false
     })
     return
   }
@@ -54,12 +59,15 @@ function onSubmit() {
       autoType: autoTypeRef.value,
       pictureUrl: response.data.message.url
     })).then(() => {
+      isLoading.value = false
       location.reload()
     }).catch(e => {
+      isLoading.value = false
       console.log(e)
       alert(e)
     })
   }).catch(e => {
+    isLoading.value = false
     console.log(e)
     alert(e)
   })
@@ -112,7 +120,7 @@ function onReset() {
       </v-sheet>
     </v-row>
     <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1 mb-4 mt-6">
-      <v-btn size="x-large" @click="onSubmit">提交</v-btn>
+      <v-btn size="x-large" @click="onSubmit" :loading="isLoading">提交</v-btn>
       <v-btn size="x-large" class="ml-5" @click="onReset">重置</v-btn>
     </v-row>
   </v-container>
