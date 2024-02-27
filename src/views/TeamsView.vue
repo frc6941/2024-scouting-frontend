@@ -13,11 +13,11 @@ axios.get(apiBaseUrl + '/api/teams')
 
 <template>
   <v-container>
-    <v-row justify="space-between">
+    <v-row>
       <v-col
         v-for="team in teams"
         :key="team"
-        cols="3"
+        cols="2"
       >
         <TeamPreviewCard 
           class="pa-2 ma-2" 

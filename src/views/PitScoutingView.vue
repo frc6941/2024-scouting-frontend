@@ -15,9 +15,21 @@ const autoTypeRef = ref('')
 
 const isLoading = ref(false)
 
+export interface PitScoutingForm {
+  teamNumber: string,
+  canAmp: boolean,
+  canSpeaker: boolean,
+  canTrap: boolean,
+  chassisType: string,
+  cycleTime: string,
+  autoType: string,
+  pictureUrl: string
+}
+
 function onSubmit() {
   isLoading.value = true
   if (robotPictureRef.value === undefined) {
+    console.log('A')
     axios.post(apiBaseUrl + '/api/pit/team', queryString.stringify({
       teamNumber: teamNumberRef.value,
       canAmp: canAmpRef.value,
@@ -57,7 +69,7 @@ function onSubmit() {
       chassisType: chassisTypeRef.value,
       cycleTime: cycleTimeRef.value,
       autoType: autoTypeRef.value,
-      pictureUrl: response.data.message.url
+      pictureUrl: response.data.data.url
     })).then(() => {
       isLoading.value = false
       location.reload()

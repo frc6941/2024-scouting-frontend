@@ -9,10 +9,15 @@ import type { ScoutingDataUploadForm } from './ScoutingView.vue';
 import axios from 'axios';
 import { apiBaseUrl } from '@/main';
 import { useRoute } from 'vue-router';
+import type { PitScoutingForm } from './PitScoutingView.vue';
 
 const teamData: Ref<Array<ScoutingDataUploadForm>> = ref([])
 
-axios.get(apiBaseUrl + '/api/record/team/' + useRoute().params.id)
+const pitTeamData = ref<PitScoutingForm>()
+
+const id = useRoute().params.id
+
+axios.get(apiBaseUrl + '/api/record/team/' + id)
   .then(response => {
     teamData.value = response.data
     teamData.value.sort((a, b) => {
@@ -29,7 +34,12 @@ axios.get(apiBaseUrl + '/api/record/team/' + useRoute().params.id)
   .then(calculatePercent)
   .then(calculateRating)
   .then(calculateCharts)
-  .catch(e => alert(e))
+  .then(() => {
+    axios.get(apiBaseUrl + '/api/pit/team/' + id)
+      .then(response => pitTeamData.value = response.data)
+      .catch(e => console.log(e))
+  })
+  .catch(e => console.log(e))
 
 const autoSpeakerSuccessPercent = ref(0)
 const autoAmpSuccessPercent = ref(0)
@@ -158,6 +168,16 @@ function calculatePercent() {
   teleopSpeakerSuccessPercent.value = Math.round((totalTeleopSpeakerSuccess / totalTeleopSpeakerShoot) * 100)
   teleopAmpSuccessPercent.value = Math.round((totalTeleopAmpSuccess / totalTeleopAmpShoot) * 100)
 }
+
+function mapYesOrNo(value: boolean | undefined) {
+  if (value === undefined) {
+    return '未收集'
+  }
+  if (value) {
+    return '是'
+  }
+  return '否'
+}
 </script>
 
 <template>
@@ -274,8 +294,52 @@ function calculatePercent() {
           :data="cycleTimeData"
         ></CycleTime>
       </v-col>
+    </v-row>
+    <v-row class="ml-5 mr-8 mt-1">
+      <v-col cols="5">
+        <v-sheet class="pa-3" elevation="2" width="100%" rounded>
+          <v-img :src="pitTeamData?.pictureUrl"></v-img>
+        </v-sheet>
+      </v-col>
       <v-col>
-        
+        <v-row class="mt-1 mr-1">
+          <SingleNumberCard
+            :data="mapYesOrNo(pitTeamData?.canAmp)"
+            title="可以放 Amp"
+          ></SingleNumberCard>
+        </v-row>
+        <v-row class="mt-5 mr-1">
+          <SingleNumberCard
+            :data="mapYesOrNo(pitTeamData?.canSpeaker)"
+            title="可以投 Speaker"
+          ></SingleNumberCard>
+        </v-row>
+        <v-row class="mt-5 mr-1">
+          <SingleNumberCard
+            :data="mapYesOrNo(pitTeamData?.canTrap)"
+            title="可以放 Trap"
+          ></SingleNumberCard>
+        </v-row>
+      </v-col>
+      <v-col>
+        <v-row class="mt-1">
+          <SingleNumberCard
+            :data="String(pitTeamData?.chassisType)"
+            title="底盘类型"
+          ></SingleNumberCard>
+        </v-row>
+        <v-row class="mt-5">
+          <SingleNumberCard
+            :data="String(pitTeamData?.cycleTime)"
+            title="最好 Cycle 时间"
+          ></SingleNumberCard>
+        </v-row>
+        <v-row class="mt-5">
+          <SingleNumberCard
+            :data="String(pitTeamData?.autoType)"
+            title="自动类型"
+          ></SingleNumberCard>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
