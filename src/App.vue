@@ -2,6 +2,17 @@
 import { ref } from 'vue';
 
 const drawer = ref(false)
+
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+
+const icon = ref('mdi-white-balance-sunny')
+
+function toggleTheme () {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+  icon.value = theme.global.current.value.dark ? 'mdi-moon-waning-crescent' : 'mdi-white-balance-sunny'
+}
 </script>
 
 <template>
@@ -17,6 +28,9 @@ const drawer = ref(false)
     <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title>2024 Crescendo Scouting</v-app-bar-title>
+      <template v-slot:append>
+        <v-btn :icon="icon" @click="toggleTheme"></v-btn>
+      </template>
     </v-app-bar>
     <v-main>
       <RouterView></RouterView>
