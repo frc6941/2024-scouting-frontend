@@ -18,6 +18,7 @@ export default defineConfig({
       '/api/v2/': {
         target: 'https://sm.ms/api/v2/',
         changeOrigin: true,
+        secure: false,
         rewrite: (path) => path.replace(/^\/api\/v2/, ''),
       }
     }
