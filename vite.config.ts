@@ -15,8 +15,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api/v2': {
-        target: 'https://sm.ms/api/v2',
+      '/api/v2/': {
+        target: 'https://sm.ms/api/v2/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/v2/, ''),
       }
