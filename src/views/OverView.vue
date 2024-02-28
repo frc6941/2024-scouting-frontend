@@ -12,7 +12,7 @@ interface TotalTeamData {
   totalDriverScore: number
 }
 
-export interface AverageTeamData {
+interface AverageTeamData {
   teamNumber: string
   numberOfRecords: number
   averageAutoScore: number
@@ -36,6 +36,7 @@ const headers = [
   { title: "平均结束得分", key: "averageEndGameScore" },
   { title: "平均Driver得分", key: "averageDriverScore" },
 ]
+
 function roundToDecimal(num: number, decimalPlaces: number): number {
   const multiplier = Math.pow(10, decimalPlaces);
   return Math.round(num * multiplier) / multiplier;
@@ -92,14 +93,12 @@ axios
   .get(apiBaseUrl + '/api/records')
   .then((response) => {
     scoutingData.value = response.data
-    console.log(scoutingData.value)
     scoutingData.value.forEach((data: any) => {
       calculateTotalTeamData(data)
     })
   })
   .then(() => {
     calculateAverageTeamData(totalTeamData)
-    console.log(averageTeamData.value)
   })
   .catch((e) => alert(e))
 
