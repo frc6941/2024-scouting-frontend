@@ -11,8 +11,11 @@ import queryString from 'query-string';
 
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie'
 import { apiBaseUrl } from '@/main';
+import { ref } from 'vue';
 
 const savedForm = getCookie('form')
+
+const isLoading = ref(false)
 
 export interface ScoutingDataUploadForm {
   scouter: string,
@@ -236,13 +239,16 @@ function onPostMatchChange(
 }
 
 function onSubmit() {
+  isLoading.value = true
   axios
     .post(apiBaseUrl + '/api/record', queryString.stringify(form))
     .then(() => {
+      isLoading.value = false
       removeCookie('form')
       location.reload()
     })
     .catch(e => {
+      isLoading.value = false
       console.log(e)
       alert(e)
     })
@@ -305,7 +311,7 @@ function onSubmit() {
     </v-col>
   </v-row>
   <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1 mb-4">
-    <v-btn size="x-large" @click="onSubmit">提交</v-btn>
+    <v-btn size="x-large" :loading="isLoading" @click="onSubmit">提交</v-btn>
     <v-btn size="x-large" class="ml-5" @click="onReset">重置</v-btn>
   </v-row>
 </template>
