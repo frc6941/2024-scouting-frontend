@@ -297,7 +297,7 @@ function mapYesOrNo(value: boolean | undefined) {
     </v-row>
     <v-row class="ml-5 mr-8 mt-1">
       <v-col cols="5">
-        <v-sheet class="pa-3" elevation="2" width="100%" rounded>
+        <v-sheet class="pa-3" elevation="2" width="100%" height="400px" rounded>
           <v-img :src="pitTeamData?.pictureUrl"></v-img>
         </v-sheet>
       </v-col>
