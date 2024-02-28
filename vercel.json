@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" },
-    { "source": "/api/v2/:path*", "destination": "https://sm.ms/api/v2/:path*" }
+    { "source": "/api/v2/:path*", "destination": "https://sm.ms/api/v2/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
