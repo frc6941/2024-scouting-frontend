@@ -50,6 +50,7 @@ function onSubmit() {
   }
   const form = new FormData()
   form.append("smfile", robotPictureRef.value[0])
+  axios.defaults.baseURL = 'https://sm.ms/api/v2/'
   axios.post('/api/v2/upload', 
     form,
     {
