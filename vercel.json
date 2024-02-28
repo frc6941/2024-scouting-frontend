@@ -1,3 +1,6 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" },
+    { "source": "/api/v2/(.*)", "destination": "https://sm.ms/api/v2/$1" }
+  ]
 }
