@@ -34,7 +34,7 @@ axios.get(apiBaseUrl + '/api/record/team/' + id)
   .then(calculatePercent)
   .then(calculateRating)
   .then(calculateCharts)
-  .then(() => {
+  .finally(() => {
     axios.get(apiBaseUrl + '/api/pit/team/' + id)
       .then(response => pitTeamData.value = response.data)
       .catch(e => console.log(e))
