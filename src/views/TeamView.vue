@@ -105,6 +105,7 @@ function calculateRating() {
   let totalOffenseSkill = 0
   let totalDefenseSkill = 0
   let totalCycleTime = 0
+  let numberOfNoCycleTime = 0
 
   for (const data of teamData.value) {
     totalDriverRating += data.driverRating
@@ -112,7 +113,11 @@ function calculateRating() {
     totalStrategyRating += data.strategyRating
     totalOffenseSkill += data.offenseSkill
     totalDefenseSkill += data.defenseSkill
-    totalCycleTime += data.cycleTime
+    if (data.cycleTime == 0) {
+      numberOfNoCycleTime += 1
+    }else {
+      totalCycleTime += data.cycleTime
+    }
   }
 
   const ratingNumber = teamData.value.length
@@ -122,7 +127,7 @@ function calculateRating() {
   strategyAverageRating.value = Number((totalStrategyRating / ratingNumber).toFixed(2))
   averageOffenseSkill.value = Number((totalOffenseSkill / ratingNumber).toFixed(2))
   averageDefenseSkill.value = Number((totalDefenseSkill / ratingNumber).toFixed(2))
-  averageCycleTime.value = Number((totalCycleTime / ratingNumber).toFixed(2))
+  averageCycleTime.value = Number((totalCycleTime / (ratingNumber - numberOfNoCycleTime)).toFixed(2))
 }
 
 function calculatePercent() {
