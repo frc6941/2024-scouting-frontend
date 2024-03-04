@@ -8,7 +8,8 @@ defineProps<{
   <v-card elevation="3">
     <v-card-title>Team {{ team }}</v-card-title>
     <v-card-actions>
-      <v-btn variant="tonal"><router-link :to="'/team/' + team">信息</router-link></v-btn>
+      <router-link :to="'team/' + team"><v-btn variant="tonal">信息</v-btn></router-link>
+      <!-- <v-btn variant="tonal"><router-link :to="'/team/' + team">信息</router-link></v-btn> -->
     </v-card-actions>
   </v-card>
 </template>
