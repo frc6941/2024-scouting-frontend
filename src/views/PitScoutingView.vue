@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { apiBaseUrl } from '@/main';
-import axios from 'axios';
-import queryString from 'query-string';
-import { ref } from 'vue';
+import { apiBaseUrl } from '@/main'
+import axios from 'axios'
+import queryString from 'query-string'
+import { ref } from 'vue'
 
 const teamNumberRef = ref('')
 const canAmpRef = ref(false)
@@ -16,72 +16,88 @@ const autoTypeRef = ref('')
 const isLoading = ref(false)
 
 export interface PitScoutingForm {
-  teamNumber: string,
-  canAmp: boolean,
-  canSpeaker: boolean,
-  canTrap: boolean,
-  chassisType: string,
-  cycleTime: string,
-  autoType: string,
+  teamNumber: string
+  canAmp: boolean
+  canSpeaker: boolean
+  canTrap: boolean
+  chassisType: string
+  cycleTime: string
+  autoType: string
   pictureUrl: string
 }
 
 function onSubmit() {
   isLoading.value = true
   if (robotPictureRef.value === undefined) {
-    axios.post(apiBaseUrl + '/api/pit/team', queryString.stringify({
-      teamNumber: teamNumberRef.value,
-      canAmp: canAmpRef.value,
-      canSpeaker: canSpeakerRef.value,
-      canTrap: canTrapRef.value,
-      chassisType: chassisTypeRef.value,
-      cycleTime: cycleTimeRef.value,
-      autoType: autoTypeRef.value,
-      pictureUrl: ''
-    })).then(() => {
-      isLoading.value = false
-      location.reload()
-    }).catch(e => {
-      console.log(e)
-      alert(e)
-      isLoading.value = false
-    })
+    axios
+      .post(
+        apiBaseUrl + '/api/pit/team',
+        queryString.stringify({
+          teamNumber: teamNumberRef.value,
+          canAmp: canAmpRef.value,
+          canSpeaker: canSpeakerRef.value,
+          canTrap: canTrapRef.value,
+          chassisType: chassisTypeRef.value,
+          cycleTime: cycleTimeRef.value,
+          autoType: autoTypeRef.value,
+          pictureUrl: ''
+        })
+      )
+      .then(() => {
+        isLoading.value = false
+        location.reload()
+      })
+      .catch((e) => {
+        console.log(e)
+        if (e.message == 'Request failed with status code 500') {
+          alert('队伍号冲突')
+        } else {
+          alert(e)
+        }
+        isLoading.value = false
+      })
     return
   }
   const form = new FormData()
-  form.append("smfile", robotPictureRef.value[0])
-  axios.post('/api/v2/upload', 
-    form,
-    {
+  form.append('smfile', robotPictureRef.value[0])
+  axios
+    .post('/api/v2/upload', form, {
       data: form,
       withCredentials: false,
       headers: {
-        'Authorization': 'Basic T6C4ASy4q9HI7j8Cgyy0tvYsbpq0VRFF'
+        Authorization: 'Basic T6C4ASy4q9HI7j8Cgyy0tvYsbpq0VRFF'
       }
-    }
-  ).then(response => {
-    axios.post(apiBaseUrl + '/api/pit/team', queryString.stringify({
-      teamNumber: teamNumberRef.value,
-      canAmp: canAmpRef.value,
-      canSpeaker: canSpeakerRef.value,
-      canTrap: canTrapRef.value,
-      chassisType: chassisTypeRef.value,
-      cycleTime: cycleTimeRef.value,
-      autoType: autoTypeRef.value,
-      pictureUrl: response.data.data.url
-    })).then(() => {
-      isLoading.value = false
-      location.reload()
-    }).catch(e => {
+    })
+    .then((response) => {
+      axios
+        .post(
+          apiBaseUrl + '/api/pit/team',
+          queryString.stringify({
+            teamNumber: teamNumberRef.value,
+            canAmp: canAmpRef.value,
+            canSpeaker: canSpeakerRef.value,
+            canTrap: canTrapRef.value,
+            chassisType: chassisTypeRef.value,
+            cycleTime: cycleTimeRef.value,
+            autoType: autoTypeRef.value,
+            pictureUrl: response.data.data.url
+          })
+        )
+        .then(() => {
+          isLoading.value = false
+          location.reload()
+        })
+        .catch((e) => {
+          isLoading.value = false
+          console.log(e)
+          alert(e)
+        })
+    })
+    .catch((e) => {
       isLoading.value = false
       console.log(e)
       alert(e)
     })
-  }).catch(e => {
-    isLoading.value = false
-    console.log(e)
-    alert(e)
-  })
 }
 
 function onReset() {
@@ -92,7 +108,12 @@ function onReset() {
 <template>
   <v-container class="pl-10 pr-10 pt-6">
     <v-row>
-      <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
+      <v-sheet
+        class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1"
+        elevation="2"
+        width="100%"
+        rounded
+      >
         <v-container>
           <v-text-field label="队伍号" v-model="teamNumberRef" hide-details></v-text-field>
         </v-container>
@@ -122,7 +143,12 @@ function onReset() {
       </v-sheet>
     </v-row>
     <v-row class="mt-6">
-      <v-sheet class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1" elevation="2" width="100%" rounded>
+      <v-sheet
+        class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1"
+        elevation="2"
+        width="100%"
+        rounded
+      >
         <v-container>
           <v-text-field label="底盘类型" v-model="chassisTypeRef"></v-text-field>
           <v-text-field label="Cycle 时间" v-model="cycleTimeRef"></v-text-field>
