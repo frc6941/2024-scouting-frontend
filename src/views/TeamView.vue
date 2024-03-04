@@ -10,7 +10,6 @@ import axios from 'axios';
 import { apiBaseUrl } from '@/main';
 import { useRoute } from 'vue-router';
 import type { PitScoutingForm } from './PitScoutingView.vue';
-import { number } from 'echarts';
 
 const teamData: Ref<Array<ScoutingDataUploadForm>> = ref([])
 
@@ -128,7 +127,6 @@ function calculateRating() {
   strategyAverageRating.value = Number((totalStrategyRating / ratingNumber).toFixed(2))
   averageOffenseSkill.value = Number((totalOffenseSkill / ratingNumber).toFixed(2))
   averageDefenseSkill.value = Number((totalDefenseSkill / ratingNumber).toFixed(2))
-  teamData.value
   averageCycleTime.value = Number((totalCycleTime / (ratingNumber - numberOfNoCycleTime)).toFixed(2))
 }
 
