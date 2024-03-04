@@ -29,7 +29,6 @@ export interface PitScoutingForm {
 function onSubmit() {
   isLoading.value = true
   if (robotPictureRef.value === undefined) {
-    console.log('A')
     axios.post(apiBaseUrl + '/api/pit/team', queryString.stringify({
       teamNumber: teamNumberRef.value,
       canAmp: canAmpRef.value,
