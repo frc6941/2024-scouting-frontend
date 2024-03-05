@@ -1,59 +1,59 @@
 <script setup lang="ts">
-import PreMatchCard from '@/components/PreMatchCard.vue';
+import PreMatchCard from '@/components/PreMatchCard.vue'
 import AutonomousCard from '@/components/AutonomousCard.vue'
 import TeleopCard from '@/components/TeleopCard.vue'
-import EndGameCard from '@/components/EndGameCard.vue';
-import PostMatchCard from '@/components/PostMatchCard.vue';
+import EndGameCard from '@/components/EndGameCard.vue'
+import PostMatchCard from '@/components/PostMatchCard.vue'
 
 import axios from 'axios'
 
-import queryString from 'query-string';
+import queryString from 'query-string'
 
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie'
-import { apiBaseUrl } from '@/main';
-import { ref } from 'vue';
+import { apiBaseUrl } from '@/main'
+import { ref } from 'vue'
 
 const savedForm = getCookie('form')
 
 const isLoading = ref(false)
 
 export interface ScoutingDataUploadForm {
-  scouter: string,
-  matchNumber: string,
-  teamNumber: string,
-  allianceRobot: string,
-  hpAtAmp: boolean,
-  robotAbsent: boolean,
-  
-  mobile: boolean,
-  autoAmpScored: number,
-  autoAmpMissed: number,
-  autoSpeakerScored: number,
-  autoSpeakerMissed: number,
-  autoFoul: number,
+  scouter: string
+  matchNumber: string
+  teamNumber: string
+  allianceRobot: string
+  hpAtAmp: boolean
+  robotAbsent: boolean
 
-  coopertition: boolean,
-  teleopAmpScored: number,
-  teleopAmpMissed: number,
-  teleopSpeakerScored: number,
-  teleopSpeakerMissed: number,
-  teleopTrapScored: number,
-  teleopFoul: number,
+  mobile: boolean
+  autoAmpScored: number
+  autoAmpMissed: number
+  autoSpeakerScored: number
+  autoSpeakerMissed: number
+  autoFoul: number
 
-  endPosition: string,
-  harmony: string,
+  coopertition: boolean
+  teleopAmpScored: number
+  teleopAmpMissed: number
+  teleopSpeakerScored: number
+  teleopSpeakerMissed: number
+  teleopTrapScored: number
+  teleopFoul: number
 
-  offenseSkill: number,
-  defenseSkill: number,
+  endPosition: string
+  harmony: string
 
-  humanPlayerRating: number,
-  driverRating: number,
-  strategyRating: number,
-  cycleTime: number,
-  
-  died: boolean,
-  tippedOver: boolean,
-  card: string,
+  offenseSkill: number
+  defenseSkill: number
+
+  humanPlayerRating: number
+  driverRating: number
+  strategyRating: number
+  cycleTime: number
+
+  died: boolean
+  tippedOver: boolean
+  card: string
   comments: string
 }
 
@@ -67,7 +67,7 @@ if (savedForm == undefined) {
     allianceRobot: '',
     hpAtAmp: false,
     robotAbsent: false,
-  
+
     mobile: false,
     autoAmpScored: 0,
     autoAmpMissed: 0,
@@ -116,7 +116,7 @@ function onReset() {
     allianceRobot: '',
     hpAtAmp: false,
     robotAbsent: false,
-  
+
     mobile: false,
     autoAmpScored: 0,
     autoAmpMissed: 0,
@@ -170,10 +170,10 @@ function onPreMatchChange(
 
 function onAutonomousChange(
   mobile: boolean,
-  ampScores: number, 
-  ampMissed: number, 
-  speakerScore: number, 
-  speakerMissed: number, 
+  ampScores: number,
+  ampMissed: number,
+  speakerScore: number,
+  speakerMissed: number,
   foul: number
 ) {
   form.mobile = mobile
@@ -187,10 +187,10 @@ function onAutonomousChange(
 
 function onTeleopChange(
   coopertition: boolean,
-  ampScores: number, 
-  ampMissed: number, 
-  speakerScore: number, 
-  speakerMissed: number, 
+  ampScores: number,
+  ampMissed: number,
+  speakerScore: number,
+  speakerMissed: number,
   trapScore: number,
   foul: number
 ) {
@@ -204,24 +204,21 @@ function onTeleopChange(
   onChange()
 }
 
-function onEndGameChange(
-  endPosition: string,
-  harmony: string
-) {
+function onEndGameChange(endPosition: string, harmony: string) {
   form.endPosition = endPosition
   form.harmony = harmony
   onChange()
 }
 
 function onPostMatchChange(
-  offenseSkill: number, 
+  offenseSkill: number,
   defenseSkill: number,
-  humanPlayerRating: number, 
+  humanPlayerRating: number,
   driverRating: number,
   strategyRating: number,
   cycleTime: number,
-  died: boolean, 
-  tippedOver: boolean, 
+  died: boolean,
+  tippedOver: boolean,
   card: string,
   comments: string
 ) {
@@ -233,25 +230,28 @@ function onPostMatchChange(
   form.cycleTime = cycleTime
   form.died = died
   form.tippedOver = tippedOver
-  form.card = card,
-  form.comments = comments
+  ;(form.card = card), (form.comments = comments)
   onChange()
 }
 
 function onSubmit() {
   isLoading.value = true
-  axios
-    .post(apiBaseUrl + '/api/record', queryString.stringify(form))
-    .then(() => {
-      isLoading.value = false
-      removeCookie('form')
-      location.reload()
-    })
-    .catch(e => {
-      isLoading.value = false
-      console.log(e)
-      alert(e)
-    })
+  if (!form.scouter || !form.matchNumber || !form.teamNumber || !form.allianceRobot) {
+    alert("请填写必要信息")
+  } else {
+    axios
+      .post(apiBaseUrl + '/api/record', queryString.stringify(form))
+      .then(() => {
+        isLoading.value = false
+        removeCookie('form')
+        location.reload()
+      })
+      .catch((e) => {
+        isLoading.value = false
+        console.log(e)
+        alert(e)
+      })
+  }
 }
 </script>
 
@@ -269,17 +269,18 @@ function onSubmit() {
       ></PreMatchCard>
     </v-col>
     <v-col>
-      <AutonomousCard 
+      <AutonomousCard
         :mobile="form.mobile"
         :ampScores="form.autoAmpScored"
         :amp-missed="form.autoAmpMissed"
         :speaker-score="form.autoSpeakerScored"
         :speaker-missed="form.autoSpeakerMissed"
         :foul="form.autoFoul"
-        @change="onAutonomousChange"></AutonomousCard>
+        @change="onAutonomousChange"
+      ></AutonomousCard>
     </v-col>
     <v-col>
-      <TeleopCard 
+      <TeleopCard
         :amp-scores="form.teleopAmpScored"
         :amp-missed="form.teleopAmpMissed"
         :speaker-score="form.teleopSpeakerScored"
@@ -287,16 +288,18 @@ function onSubmit() {
         :foul="form.teleopFoul"
         :trap-scored="form.teleopTrapScored"
         :coopertition="form.coopertition"
-        @change="onTeleopChange"></TeleopCard>
+        @change="onTeleopChange"
+      ></TeleopCard>
     </v-col>
     <v-col>
-      <EndGameCard 
+      <EndGameCard
         :end-position="form.endPosition"
         :harmony="form.harmony"
-        @change="onEndGameChange"></EndGameCard>
+        @change="onEndGameChange"
+      ></EndGameCard>
     </v-col>
     <v-col>
-      <PostMatchCard 
+      <PostMatchCard
         :offense-skill="form.offenseSkill"
         :defense-skill="form.defenseSkill"
         :human-player-rating="form.humanPlayerRating"
@@ -307,7 +310,8 @@ function onSubmit() {
         :card="form.card"
         :comments="form.comments"
         :tipped-over="form.tippedOver"
-        @change="onPostMatchChange"></PostMatchCard>
+        @change="onPostMatchChange"
+      ></PostMatchCard>
     </v-col>
   </v-row>
   <v-row class="d-flex align-center justify-center flex-wrap text-center mx-auto px-1 mb-4">
