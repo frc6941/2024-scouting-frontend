@@ -236,22 +236,23 @@ function onPostMatchChange(
 
 function onSubmit() {
   isLoading.value = true
-  if (!form.scouter || !form.matchNumber || !form.teamNumber || !form.allianceRobot) {
+  if (form.scouter == '' || form.matchNumber == '' || form.teamNumber == '' || form.allianceRobot == '') {
     alert("请填写必要信息")
-  } else {
-    axios
-      .post(apiBaseUrl + '/api/record', queryString.stringify(form))
-      .then(() => {
-        isLoading.value = false
-        removeCookie('form')
-        location.reload()
-      })
-      .catch((e) => {
-        isLoading.value = false
-        console.log(e)
-        alert(e)
-      })
+    isLoading.value = false
+    return
   }
+  axios
+    .post(apiBaseUrl + '/api/record', queryString.stringify(form))
+    .then(() => {
+      isLoading.value = false
+      removeCookie('form')
+      location.reload()
+    })
+    .catch((e) => {
+      isLoading.value = false
+      console.log(e)
+      alert(e)
+    })
 }
 </script>
 
