@@ -8,6 +8,7 @@ const teams: Ref<Array<number>> = ref([])
 
 axios.get(apiBaseUrl + '/api/teams')
   .then(response => teams.value = response.data)
+  .then(() => {teams.value = teams.value.sort((a, b) => a - b)})
   .catch(e => alert(e))
 </script>
 
@@ -17,7 +18,7 @@ axios.get(apiBaseUrl + '/api/teams')
       <v-col
         v-for="team in teams"
         :key="team"
-        cols="2"
+        cols="12" sm="6" lg="3"
       >
         <TeamPreviewCard 
           class="pa-2 ma-2" 
