@@ -236,6 +236,8 @@ function onPostMatchChange(
 
 function onSubmit() {
   isLoading.value = true
+  form.matchNumber = form.matchNumber.trim()
+  form.teamNumber = form.teamNumber.trim()
   if (form.scouter == '' || form.matchNumber == '' || form.teamNumber == '' || form.allianceRobot == '') {
     alert("请填写必要信息")
     isLoading.value = false
