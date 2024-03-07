@@ -11,7 +11,8 @@ const robots = [
 ]
 const matchTypes = [
   "Quals",
-  "Prac"
+  "Prac",
+  "Match"
 ]
 
 const props = defineProps<{
